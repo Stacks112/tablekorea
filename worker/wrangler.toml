@@ -1,0 +1,14 @@
+name = "tablekorea-api"
+main = "index.js"
+compatibility_date = "2026-07-01"
+
+# Create the database first:
+#   npx wrangler d1 create tablekorea
+# then paste the printed database_id below.
+[[d1_databases]]
+binding = "DB"
+database_name = "tablekorea"
+database_id = "REPLACE-WITH-D1-ID"
+
+# Secrets (set via `npx wrangler secret put IP_SALT`):
+#   IP_SALT — random string for ip hashing
