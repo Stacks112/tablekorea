@@ -51,7 +51,7 @@ def main() -> int:
     written = []
     for p in places:
         desc = f"{p['cat']} in Seongsu, Seoul. {p['sum']['dish']}"
-        ldjson = json.dumps({
+        ld = {
             "@context": "https://schema.org",
             "@type": "Restaurant",
             "name": p["en"],
@@ -59,10 +59,15 @@ def main() -> int:
             "servesCuisine": p["cat"],
             "geo": {"@type": "GeoCoordinates",
                     "latitude": p["lat"], "longitude": p["lng"]},
-            "aggregateRating": {"@type": "AggregateRating",
-                                "ratingValue": p["rating"],
-                                "reviewCount": sum(p["reviews"].values())},
-        }, ensure_ascii=False)
+        }
+        if p.get("addr"):
+            ld["address"] = p["addr"]
+        # only claim a rating when we actually have one — never fabricate
+        if p.get("rating") is not None and p.get("reviews"):
+            ld["aggregateRating"] = {"@type": "AggregateRating",
+                                     "ratingValue": p["rating"],
+                                     "reviewCount": sum(p["reviews"].values())}
+        ldjson = json.dumps(ld, ensure_ascii=False)
         page = PAGE.format(
             en=html.escape(p["en"]), kr=html.escape(p["kr"]),
             desc=html.escape(desc), pid=p["id"], base=BASE, ldjson=ldjson,
