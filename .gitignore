@@ -1,0 +1,16 @@
+# secrets & env — never commit (Stacks security-review lesson: day one, not later)
+.env*
+.dev.vars*
+*.pem
+.netrc
+
+# python
+__pycache__/
+*.pyc
+
+# node
+node_modules/
+
+# local scratch
+*.local.*
+.DS_Store

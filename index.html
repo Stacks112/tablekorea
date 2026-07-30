@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>TableKorea — Eat like a local in Seongsu, Seoul</title>
+<meta name="description" content="Find, compare and book Seongsu restaurants like a local — AI summaries of Korean reviews, situation filters, and booking links that work without a Korean phone number.">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f7f6f3;
+    --surface: #ffffff;
+    --ink: #141414;
+    --ink-2: #52514e;
+    --ink-3: #8a8880;
+    --line: #e7e5de;
+    --brand: #e8542f;
+    --brand-soft: #fdeee9;
+    --blue: #2a78d6;
+    --blue-soft: #eaf2fc;
+    --green: #1e7a34;
+    --green-soft: #ecf5ee;
+    --amber: #b26a00;
+    --amber-soft: #fdf3e3;
+    --map-bg: #eef0e9;
+    --map-road: #ffffff;
+    --map-park: #d5e6d0;
+    --map-water: #cfe0ef;
+    --radius: 14px;
+    --shadow: 0 4px 20px rgba(20,20,20,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body {
+    font-family: system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Apple SD Gothic Neo", "Microsoft JhengHei", sans-serif;
+    background: var(--bg); color: var(--ink);
+    line-height: 1.5; font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .app { max-width: 480px; margin: 0 auto; min-height: 100dvh; background: var(--bg); position: relative; }
+  @media (min-width: 900px) { .app { box-shadow: 0 0 40px rgba(0,0,0,0.10); } }
+
+  .topbar { position: sticky; top: 0; z-index: 30; background: rgba(247,246,243,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .topbar-in { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px 8px; }
+  .logo { font-weight: 800; font-size: 19px; letter-spacing: -0.02em; }
+  .logo em { color: var(--brand); font-style: normal; }
+  .logo-sub { font-size: 11px; color: var(--ink-3); margin-top: -2px; }
+  .lang { display: flex; gap: 4px; }
+  .lang button { border: 1px solid var(--line); background: var(--surface); border-radius: 20px; font-size: 12px; padding: 4px 10px; color: var(--ink-2); cursor: pointer; }
+  .lang button.on { background: var(--ink); color: #fff; border-color: var(--ink); font-weight: 600; }
+
+  .filters { padding: 4px 16px 12px; display: flex; flex-direction: column; gap: 8px; }
+  .chip-row { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+  .chip-row::-webkit-scrollbar { display: none; }
+  .chip { flex: 0 0 auto; border: 1px solid var(--line); background: var(--surface); border-radius: 20px; padding: 6px 13px; font-size: 13px; color: var(--ink-2); cursor: pointer; white-space: nowrap; transition: all .12s; }
+  .chip.on { background: var(--brand); border-color: var(--brand); color: #fff; font-weight: 600; }
+  .chip.on-dark { background: var(--ink); border-color: var(--ink); color: #fff; font-weight: 600; }
+
+  .map-wrap { position: relative; margin: 0 16px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--map-bg); box-shadow: var(--shadow); }
+  .map-svg { display: block; width: 100%; height: auto; user-select: none; }
+  .map-note { position: absolute; left: 10px; bottom: 8px; font-size: 10px; color: var(--ink-3); background: rgba(255,255,255,0.8); padding: 2px 7px; border-radius: 10px; }
+  .pin { cursor: pointer; }
+  .pin circle.dot { fill: var(--brand); stroke: #fff; stroke-width: 2; transition: r .12s; }
+  .pin.dim circle.dot { fill: #b9b7ae; }
+  .pin.sel circle.dot { fill: #141414; }
+  .pin text { font-size: 9.5px; font-weight: 700; fill: #fff; text-anchor: middle; pointer-events: none; }
+  .maplabel { font-size: 10px; fill: #7c8a74; font-weight: 600; }
+  .stlabel { font-size: 9.5px; fill: #667; font-weight: 700; }
+
+  .list-head { display: flex; align-items: baseline; justify-content: space-between; padding: 18px 16px 8px; }
+  .list-head h2 { font-size: 16px; }
+  .list-head .n { color: var(--ink-3); font-size: 12.5px; }
+  .cards { padding: 0 16px 110px; display: flex; flex-direction: column; gap: 12px; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 15px; cursor: pointer; transition: transform .1s; position: relative; }
+  .card:active { transform: scale(0.99); }
+  .card.sel { border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink); }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+  .card h3 { font-size: 15.5px; line-height: 1.3; }
+  .card .kr { font-size: 12px; color: var(--ink-3); font-weight: 400; margin-left: 4px; }
+  .meta { font-size: 12.5px; color: var(--ink-2); margin-top: 2px; }
+  .meta b { color: var(--ink); }
+  .score { flex: 0 0 auto; text-align: right; }
+  .score .val { font-weight: 800; font-size: 15px; }
+  .score .src { font-size: 10.5px; color: var(--ink-3); }
+  .badges { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+  .bdg { font-size: 11px; padding: 2.5px 8px; border-radius: 6px; font-weight: 600; }
+  .b-blue { background: var(--blue-soft); color: var(--blue); }
+  .b-green { background: var(--green-soft); color: var(--green); }
+  .b-amber { background: var(--amber-soft); color: var(--amber); }
+  .b-gray { background: #f1f0ec; color: var(--ink-2); }
+  .b-brand { background: var(--brand-soft); color: var(--brand); }
+  .summ { margin-top: 9px; font-size: 12.5px; color: var(--ink-2); border-left: 2.5px solid var(--brand); padding-left: 9px; }
+  .summ .ai { font-size: 10.5px; font-weight: 700; color: var(--brand); letter-spacing: 0.04em; }
+  .card-actions { display: flex; gap: 8px; margin-top: 11px; }
+  .btn { flex: 1; border: none; border-radius: 9px; padding: 9px 0; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+  .btn-primary { background: var(--brand); color: #fff; }
+  .btn-cmp { flex: 0 0 auto; width: 40px; background: var(--surface); border: 1px solid var(--line); color: var(--ink-3); font-size: 15px; }
+  .btn-cmp.on { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .empty { text-align: center; color: var(--ink-3); padding: 40px 20px; font-size: 13.5px; }
+  .empty b { color: var(--ink-2); }
+
+  .cmp-bar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; z-index: 40; padding: 10px 16px calc(12px + env(safe-area-inset-bottom)); background: linear-gradient(transparent, var(--bg) 30%); display: none; }
+  .cmp-bar.show { display: block; }
+  .cmp-bar-in { background: var(--ink); color: #fff; border-radius: 14px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 8px 24px rgba(0,0,0,0.25); gap: 10px; }
+  .cmp-bar-in .t { font-size: 13.5px; font-weight: 600; }
+  .cmp-bar-in .s { font-size: 11.5px; opacity: 0.7; max-width: 210px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .cmp-go { background: var(--brand); color: #fff; border: none; border-radius: 9px; padding: 8px 16px; font-weight: 700; font-size: 13.5px; cursor: pointer; font-family: inherit; flex: 0 0 auto; }
+
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 50; opacity: 0; pointer-events: none; transition: opacity .18s; }
+  .overlay.show { opacity: 1; pointer-events: auto; }
+  .sheet { position: fixed; left: 50%; transform: translate(-50%, 105%); bottom: 0; width: 100%; max-width: 480px; max-height: 88dvh; background: var(--surface); border-radius: 18px 18px 0 0; z-index: 51; transition: transform .22s ease-out; display: flex; flex-direction: column; }
+  .sheet.show { transform: translate(-50%, 0); }
+  .sheet-grip { flex: 0 0 auto; padding: 10px 0 4px; display: flex; justify-content: center; }
+  .sheet-grip::after { content: ""; width: 38px; height: 4px; border-radius: 4px; background: var(--line); }
+  .sheet-body { overflow-y: auto; padding: 6px 18px calc(24px + env(safe-area-inset-bottom)); }
+  .sheet h2 { font-size: 19px; line-height: 1.25; }
+  .sheet .kr2 { font-size: 13px; color: var(--ink-3); font-weight: 400; }
+  .rating-row { display: flex; gap: 8px; margin: 12px 0; }
+  .rt { flex: 1; background: var(--bg); border-radius: 10px; padding: 8px 10px; text-align: center; }
+  .rt .v { font-weight: 800; font-size: 15px; }
+  .rt .l { font-size: 10.5px; color: var(--ink-3); }
+  .sec-t { font-size: 12px; font-weight: 700; color: var(--ink-3); letter-spacing: 0.05em; text-transform: uppercase; margin: 16px 0 7px; }
+  .ai-box { background: linear-gradient(135deg, #fdf1ec, #fdf7ef); border: 1px solid #f5ddd2; border-radius: 12px; padding: 13px 14px; }
+  .ai-box .ai-t { font-size: 11px; font-weight: 800; color: var(--brand); letter-spacing: 0.04em; margin-bottom: 7px; }
+  .ai-box ul { list-style: none; }
+  .ai-box li { font-size: 13.5px; color: #3d3a36; padding: 4px 0 4px 22px; position: relative; }
+  .ai-box li::before { position: absolute; left: 0; top: 4px; }
+  .ai-box li.dish::before { content: "🍽️"; }
+  .ai-box li.vibe::before { content: "✨"; }
+  .ai-box li.wait::before { content: "⏱️"; }
+  .ai-box li.tip::before { content: "💡"; }
+  .ai-src { font-size: 10.5px; color: var(--ink-3); margin-top: 8px; }
+  .ai-note { font-size: 11px; color: var(--amber); margin-top: 6px; font-weight: 600; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+  .ig { background: var(--bg); border-radius: 10px; padding: 9px 11px; }
+  .ig .l { font-size: 10.5px; color: var(--ink-3); }
+  .ig .v { font-size: 13px; font-weight: 600; margin-top: 1px; }
+  .act-col { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
+  .act { display: flex; align-items: center; justify-content: space-between; border-radius: 11px; padding: 12px 14px; font-size: 14px; font-weight: 600; cursor: pointer; border: none; font-family: inherit; text-align: left; gap: 8px; }
+  .act > div { flex: 1; }
+  .act .sub { display: block; font-size: 11px; font-weight: 400; opacity: 0.75; margin-top: 1px; }
+  .act-res { background: var(--brand); color: #fff; }
+  .act-dir { background: #163e73; color: #fff; }
+  .act-g { background: #f1f0ec; color: var(--ink); }
+  .act span.arr { font-size: 16px; opacity: 0.6; }
+
+  .cmp-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 8px; }
+  .cmp-table th { font-size: 11px; color: var(--ink-3); text-align: left; padding: 7px 6px; border-bottom: 1px solid var(--line); font-weight: 600; }
+  .cmp-table td { padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--ink-2); }
+  .cmp-table td:first-child, .cmp-table th:first-child { width: 82px; color: var(--ink-3); font-size: 11px; font-weight: 600; }
+  .cmp-table .name-cell { font-weight: 700; color: var(--ink); font-size: 13px; }
+  .yes { color: var(--green); font-weight: 700; }
+  .no { color: #b0aea6; }
+
+  #toast { position: fixed; left: 50%; transform: translateX(-50%) translateY(20px); bottom: 90px; background: var(--ink); color: #fff; font-size: 13px; padding: 10px 16px; border-radius: 12px; opacity: 0; transition: all .2s; z-index: 90; pointer-events: none; max-width: 84%; text-align: center; }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .proto-note { margin: 4px 16px 0; font-size: 11px; color: var(--ink-3); text-align: center; padding: 6px 0 2px; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="topbar">
+    <div class="topbar-in">
+      <div>
+        <h1 class="logo">Table<em>Korea</em></h1>
+        <div class="logo-sub" data-i18n="sub"></div>
+      </div>
+      <div class="lang" id="lang">
+        <button class="on" data-l="EN">EN</button>
+        <button data-l="JA">日</button>
+        <button data-l="ZH">中</button>
+      </div>
+    </div>
+    <div class="filters">
+      <div class="chip-row" id="f-party">
+        <button class="chip on-dark" data-v="any" data-i18n="party_any"></button>
+        <button class="chip" data-v="2" data-i18n="party_2"></button>
+        <button class="chip" data-v="4" data-i18n="party_4"></button>
+        <button class="chip" data-v="group" data-i18n="party_group"></button>
+      </div>
+      <div class="chip-row" id="f-tags">
+        <button class="chip" data-v="date" data-i18n="tag_date"></button>
+        <button class="chip" data-v="family" data-i18n="tag_family"></button>
+        <button class="chip" data-v="engmenu" data-i18n="tag_engmenu"></button>
+        <button class="chip" data-v="card" data-i18n="tag_card"></button>
+        <button class="chip" data-v="nowait" data-i18n="tag_nowait"></button>
+        <button class="chip" data-v="late" data-i18n="tag_late"></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="map-wrap">
+    <svg class="map-svg" id="map" viewBox="0 0 448 250" role="img" aria-label="Map of Seongsu with restaurant pins"></svg>
+    <div class="map-note" data-i18n="map_note"></div>
+  </div>
+  <div class="proto-note" data-i18n="proto_note"></div>
+
+  <div class="list-head">
+    <h2 id="list-title"></h2>
+    <span class="n" id="list-n"></span>
+  </div>
+  <div class="cards" id="cards"></div>
+
+  <div class="cmp-bar" id="cmp-bar">
+    <div class="cmp-bar-in">
+      <div>
+        <div class="t" id="cmp-t"></div>
+        <div class="s" id="cmp-s"></div>
+      </div>
+      <button class="cmp-go" id="cmp-go" data-i18n="cmp_go"></button>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+  <div class="sheet" id="sheet">
+    <div class="sheet-grip"></div>
+    <div class="sheet-body" id="sheet-body"></div>
+  </div>
+
+  <div id="toast" role="status"></div>
+</div>
+
+<script>
+/* =========================================================================
+   DATA — canonical source is data/places.json.
+   scripts/sync_data.py injects it between the anchors below. Do not edit
+   the array here by hand; edit data/places.json and run the sync script.
+   ========================================================================= */
+/* @PLACES_START */
+const PLACES = [
+  {
+    "id": "p1",
+    "en": "Seongsu Charcoal Galbi",
+    "kr": "성수숯불갈비",
+    "cat": "Korean BBQ",
+    "price": 3,
+    "lat": 37.5449,
+    "lng": 127.0559,
+    "party": [
+      2,
+      4,
+      "group"
+    ],
+    "tags": [
+      "date"
+    ],
+    "engMenu": true,
+    "cardOk": true,
+    "late": true,
+    "wait": "med",
+    "reserve": "catchtable",
+    "rating": 4.6,
+    "reviews": {
+      "naver": 1284,
+      "kakao": 412,
+      "catch": 198
+    },
+    "sum": {
+      "dish": "Nearly every review orders the marinated beef galbi + naengmyeon combo to finish.",
+      "vibe": "Loud, smoky, classic K-BBQ energy — staff grill the meat for you.",
+      "wait": "~30 min at dinner peak (7–8pm). Walk-ins OK before 6pm.",
+      "tip": "Reviewers say solo staff speak basic English and there's a photo menu."
+    }
+  },
+  {
+    "id": "p2",
+    "en": "Brick Lane Coffee",
+    "kr": "브릭레인커피",
+    "cat": "Cafe · Bakery",
+    "price": 2,
+    "lat": 37.5421,
+    "lng": 127.0568,
+    "party": [
+      2,
+      4
+    ],
+    "tags": [
+      "date"
+    ],
+    "engMenu": true,
+    "cardOk": true,
+    "late": false,
+    "wait": "low",
+    "reserve": "walkin",
+    "rating": 4.4,
+    "reviews": {
+      "naver": 2103,
+      "kakao": 876,
+      "catch": 0
+    },
+    "sum": {
+      "dish": "Salt bread and hand-drip single origin are the two things everyone mentions.",
+      "vibe": "Renovated red-brick factory, industrial-cool — the 'Seongsu look'.",
+      "wait": "Seats turn over fast; weekends busy 2–5pm but queue moves quickly.",
+      "tip": "Order at the counter; card only, no cash — foreign cards fine."
+    }
+  },
+  {
+    "id": "p3",
+    "en": "Chorong Kalguksu",
+    "kr": "초롱칼국수",
+    "cat": "Noodles · Local",
+    "price": 1,
+    "lat": 37.5462,
+    "lng": 127.0541,
+    "party": [
+      2,
+      4
+    ],
+    "tags": [
+      "family"
+    ],
+    "engMenu": false,
+    "cardOk": true,
+    "late": false,
+    "wait": "low",
+    "reserve": "walkin",
+    "rating": 4.5,
+    "reviews": {
+      "naver": 934,
+      "kakao": 511,
+      "catch": 0
+    },
+    "sum": {
+      "dish": "Hand-cut knife noodles in anchovy broth; kimchi is self-serve and praised.",
+      "vibe": "No-frills local lunch spot — plastic stools, fast service, mostly regulars.",
+      "wait": "None outside 12–1pm office rush.",
+      "tip": "Korean-only menu, but only 4 items — reviewers say pointing works fine."
+    }
+  },
+  {
+    "id": "p4",
+    "en": "Forest Omakase",
+    "kr": "숲 오마카세",
+    "cat": "Sushi · Omakase",
+    "price": 3,
+    "lat": 37.5445,
+    "lng": 127.0505,
+    "party": [
+      2
+    ],
+    "tags": [
+      "date"
+    ],
+    "engMenu": true,
+    "cardOk": true,
+    "late": false,
+    "wait": "low",
+    "reserve": "phone",
+    "rating": 4.8,
+    "reviews": {
+      "naver": 388,
+      "kakao": 102,
+      "catch": 341
+    },
+    "sum": {
+      "dish": "12-course lunch omakase is the value pick (~₩60,000).",
+      "vibe": "8-seat counter facing Seoul Forest; quiet, intimate, chef chats in English.",
+      "wait": "Reservation-only — no walk-ins accepted.",
+      "tip": "Phone booking only. Ask your hotel concierge to call, or use our call service (coming soon)."
+    }
+  },
+  {
+    "id": "p5",
+    "en": "Golmok Jeon & Makgeolli",
+    "kr": "골목전집",
+    "cat": "Korean pub",
+    "price": 2,
+    "lat": 37.5455,
+    "lng": 127.0585,
+    "party": [
+      4,
+      "group"
+    ],
+    "tags": [],
+    "engMenu": false,
+    "cardOk": false,
+    "late": true,
+    "wait": "high",
+    "reserve": "walkin",
+    "rating": 4.7,
+    "reviews": {
+      "naver": 1671,
+      "kakao": 723,
+      "catch": 0
+    },
+    "sum": {
+      "dish": "Seafood pancake + house makgeolli; locals call it the best jeon in Seongsu.",
+      "vibe": "Retro alley pub, packed after 7pm, very local — almost no tourists.",
+      "wait": "45–60 min Fri/Sat nights. No waitlist app — you queue in person.",
+      "tip": "CASH ONLY for foreign cards (Korean cards OK). ATM is 2 min away."
+    }
+  },
+  {
+    "id": "p6",
+    "en": "Hanwoo & Bean",
+    "kr": "한우앤빈",
+    "cat": "Korean BBQ · Premium",
+    "price": 3,
+    "lat": 37.5416,
+    "lng": 127.0532,
+    "party": [
+      2,
+      4,
+      "group"
+    ],
+    "tags": [
+      "date",
+      "family"
+    ],
+    "engMenu": true,
+    "cardOk": true,
+    "late": true,
+    "wait": "med",
+    "reserve": "catchtable",
+    "rating": 4.5,
+    "reviews": {
+      "naver": 892,
+      "kakao": 301,
+      "catch": 264
+    },
+    "sum": {
+      "dish": "1++ hanwoo tasting set for two; doenjang stew finish is repeatedly praised.",
+      "vibe": "Modern, quieter than most BBQ spots — good for conversation.",
+      "wait": "Bookable, so near-zero if reserved. Walk-in ~20 min.",
+      "tip": "Has private rooms for 6–10 — reviewers recommend for family dinners."
+    }
+  },
+  {
+    "id": "p7",
+    "en": "Seongsu Brunch Works",
+    "kr": "성수브런치웍스",
+    "cat": "Brunch · Western",
+    "price": 2,
+    "lat": 37.5432,
+    "lng": 127.0596,
+    "party": [
+      2,
+      4
+    ],
+    "tags": [
+      "date",
+      "family"
+    ],
+    "engMenu": true,
+    "cardOk": true,
+    "late": false,
+    "wait": "med",
+    "reserve": "catchtable",
+    "rating": 4.3,
+    "reviews": {
+      "naver": 1105,
+      "kakao": 489,
+      "catch": 97
+    },
+    "sum": {
+      "dish": "Ricotta pancakes and the bulgogi benedict (K-fusion) split reviewers evenly.",
+      "vibe": "Bright plant-filled space; stroller-friendly, lots of families on weekends.",
+      "wait": "Weekend 11am–1pm queue ~25 min; weekdays walk right in.",
+      "tip": "Full English menu + English-speaking staff — easiest brunch in the area."
+    }
+  },
+  {
+    "id": "p8",
+    "en": "Yeonmujang Dakhanmari",
+    "kr": "연무장닭한마리",
+    "cat": "Chicken hotpot",
+    "price": 2,
+    "lat": 37.5442,
+    "lng": 127.0577,
+    "party": [
+      4,
+      "group"
+    ],
+    "tags": [
+      "family"
+    ],
+    "engMenu": false,
+    "cardOk": true,
+    "late": true,
+    "wait": "med",
+    "reserve": "walkin",
+    "rating": 4.4,
+    "reviews": {
+      "naver": 756,
+      "kakao": 388,
+      "catch": 0
+    },
+    "sum": {
+      "dish": "Whole chicken hotpot for sharing — add the hand-cut noodles at the end.",
+      "vibe": "Steamy, communal, big round tables — made for groups of 4–8.",
+      "wait": "~20 min at dinner; big tables free up slowly.",
+      "tip": "Menu is Korean-only but there are only 3 options; staff gesture the steps."
+    }
+  },
+  {
+    "id": "p9",
+    "en": "Vegan Seongsu Table",
+    "kr": "비건성수식탁",
+    "cat": "Vegan · Korean",
+    "price": 2,
+    "lat": 37.5468,
+    "lng": 127.0563,
+    "party": [
+      2,
+      4
+    ],
+    "tags": [
+      "date"
+    ],
+    "engMenu": true,
+    "cardOk": true,
+    "late": false,
+    "wait": "low",
+    "reserve": "catchtable",
+    "rating": 4.6,
+    "reviews": {
+      "naver": 412,
+      "kakao": 156,
+      "catch": 88
+    },
+    "sum": {
+      "dish": "Temple-style mushroom bowl; vegan kimchi jjigae surprises meat-eaters.",
+      "vibe": "Calm, minimalist; popular with international long-stay visitors.",
+      "wait": "Rarely more than 10 min.",
+      "tip": "One of very few fully-vegan Korean places east of the river — book ahead Sundays."
+    }
+  },
+  {
+    "id": "p10",
+    "en": "Ttukseom Grilled Fish",
+    "kr": "뚝섬생선구이",
+    "cat": "Grilled fish set",
+    "price": 1,
+    "lat": 37.5476,
+    "lng": 127.0522,
+    "party": [
+      2,
+      4
+    ],
+    "tags": [
+      "family"
+    ],
+    "engMenu": false,
+    "cardOk": true,
+    "late": false,
+    "wait": "low",
+    "reserve": "walkin",
+    "rating": 4.3,
+    "reviews": {
+      "naver": 645,
+      "kakao": 290,
+      "catch": 0
+    },
+    "sum": {
+      "dish": "₩12,000 mackerel set with 8 banchan — reviewers call it the best-value lunch nearby.",
+      "vibe": "Homey, ajumma-run; feels like a Korean grandmother's kitchen.",
+      "wait": "Office rush 12–1pm only.",
+      "tip": "Point at the fish display to order — no shared language needed, and it works."
+    }
+  },
+  {
+    "id": "p11",
+    "en": "Late Night Gopchang Alley",
+    "kr": "심야곱창골목",
+    "cat": "Gopchang · Late night",
+    "price": 2,
+    "lat": 37.5427,
+    "lng": 127.0549,
+    "party": [
+      2,
+      4,
+      "group"
+    ],
+    "tags": [],
+    "engMenu": false,
+    "cardOk": true,
+    "late": true,
+    "wait": "high",
+    "reserve": "walkin",
+    "rating": 4.5,
+    "reviews": {
+      "naver": 1320,
+      "kakao": 604,
+      "catch": 0
+    },
+    "sum": {
+      "dish": "Beef gopchang mixed grill; fried rice finish is described as mandatory.",
+      "vibe": "Open till 2am — where locals go after round one. Loud and fun.",
+      "wait": "Peak 9–11pm, ~40 min. After midnight you walk in.",
+      "tip": "Adventurous eaters only — reviews warn first-timers to start with the mixed set."
+    }
+  },
+  {
+    "id": "p12",
+    "en": "Seoul Forest Pasta Bar",
+    "kr": "서울숲파스타바",
+    "cat": "Italian · Wine",
+    "price": 2,
+    "lat": 37.5459,
+    "lng": 127.0498,
+    "party": [
+      2
+    ],
+    "tags": [
+      "date"
+    ],
+    "engMenu": true,
+    "cardOk": true,
+    "late": true,
+    "wait": "med",
+    "reserve": "catchtable",
+    "rating": 4.4,
+    "reviews": {
+      "naver": 980,
+      "kakao": 344,
+      "catch": 151
+    },
+    "sum": {
+      "dish": "Perilla-oil pasta (K-Italian) is the signature everyone photographs.",
+      "vibe": "Dim, 12-seat wine bar; couples only by design — no groups.",
+      "wait": "Bookable; walk-in chances low after 7pm.",
+      "tip": "Corkage-free Mondays gets mentioned in half the recent reviews."
+    }
+  }
+];
+/* @PLACES_END */
+
+/* ================= i18n ================= */
+const I18N = {
+  EN: {
+    sub: "Eat like a local · Seongsu, Seoul",
+    party_any: "👥 Any size", party_2: "2 people", party_4: "4 people", party_group: "Group 6+",
+    tag_date: "💜 Date night", tag_family: "👨‍👩‍👧 Family", tag_engmenu: "🇬🇧 English menu",
+    tag_card: "💳 Foreign card OK", tag_nowait: "⚡ No wait", tag_late: "🌙 Open late",
+    map_note: "Schematic map · production uses Naver/Kakao SDK",
+    proto_note: "Prototype — all 12 venues are illustrative sample data",
+    title_all: "All spots in Seongsu", title_match: "Matching your situation",
+    n_of: (a, b) => `${a} of ${b}`,
+    wait_low: "Short / none", wait_med: "Moderate", wait_high: "Long (45m+)", wait_word: "wait",
+    reviews_src: n => `${n} reviews · 3 sources`,
+    bdg_en: "EN menu", bdg_card: "Foreign card OK", bdg_cash: "Cash for foreign cards",
+    bdg_late: "Open late", bdg_wait: "Long waits", bdg_book: "Bookable", bdg_phone: "Phone booking only",
+    ai_label: "AI SUMMARY", btn_detail: "Details & booking",
+    empty: "<b>No exact match.</b><br>Try removing one filter — Seongsu is small, we'll find you something.",
+    cmp_t: n => `Compare ${n} place${n > 1 ? "s" : ""}`, cmp_s: "Pick up to 3 places", cmp_go: "Compare →",
+    cmp_title: "Side by side",
+    r_rating: "Rating", r_price: "Price", r_wait: "Wait", r_book: "Booking", r_en: "EN menu",
+    r_card: "Foreign card", r_late: "Open late", r_best: "Best for", r_one: "One-liner",
+    yes: "Yes", ok: "OK", cash: "Cash", no: "No", ppl: "ppl", grp: "6+",
+    blended: "blended",
+    ai_t: "🤖 AI SUMMARY — what Korean reviews actually say",
+    ai_src: n => `Summarized & translated from ${n} Korean reviews across Naver · Kakao · Catchtable (sample data)`,
+    ai_note: "",
+    good: "Good to know",
+    g_en: "English menu", g_card: "Foreign cards", g_wait: "Typical wait", g_best: "Best for",
+    v_en_y: "Yes ✓", v_en_n: "No — photo/point ordering", v_card_y: "Accepted ✓", v_card_n: "Bring cash",
+    groups: "groups 6+",
+    act_book: "Reserve on Catchtable Global", act_book_s: "No Korean phone number needed",
+    act_phone: "Phone booking only", act_phone_s: "Call service for tourists — coming soon",
+    act_walk: "Walk-in friendly", act_walk_s: "No reservation needed — check wait note above",
+    act_naver: "Directions — Naver Map", act_naver_s: "Best routing inside Korea",
+    act_google: "Open in Google Maps", act_google_s: "If you prefer the familiar",
+    close: "Close",
+    t_max3: "You can compare up to 3 places",
+    t_min2: "Pick at least 2 places to compare",
+    t_book: "Demo — production deep-links into Catchtable Global for this venue",
+    t_phone: "Demo — v2 idea: we call the restaurant for you",
+    t_walk: "No booking needed — just show up 🙌",
+    t_naver: "Demo — production opens Naver Map walking directions",
+  },
+  JA: {
+    sub: "地元の人のように食べる · ソウル聖水",
+    party_any: "👥 人数指定なし", party_2: "2人", party_4: "4人", party_group: "6人以上",
+    tag_date: "💜 デート", tag_family: "👨‍👩‍👧 家族", tag_engmenu: "🌐 外国語メニュー",
+    tag_card: "💳 海外カードOK", tag_nowait: "⚡ 待ちなし", tag_late: "🌙 深夜営業",
+    map_note: "略地図 · 本番はNaver/Kakao地図SDKを使用",
+    proto_note: "プロトタイプ — 12店舗はすべてサンプルデータです",
+    title_all: "聖水の全スポット", title_match: "条件に合うお店",
+    n_of: (a, b) => `${b}件中${a}件`,
+    wait_low: "ほぼなし", wait_med: "普通", wait_high: "長い (45分+)", wait_word: "待ち",
+    reviews_src: n => `レビュー${n}件 · 3ソース`,
+    bdg_en: "外国語メニュー", bdg_card: "海外カードOK", bdg_cash: "海外カードは現金のみ",
+    bdg_late: "深夜営業", bdg_wait: "行列店", bdg_book: "予約可", bdg_phone: "電話予約のみ",
+    ai_label: "AI要約", btn_detail: "詳細・予約",
+    empty: "<b>完全一致なし。</b><br>フィルターを1つ外してみてください — 聖水は狭いので、きっと見つかります。",
+    cmp_t: n => `${n}店舗を比較`, cmp_s: "最大3店舗まで選択", cmp_go: "比較 →",
+    cmp_title: "店舗比較",
+    r_rating: "評価", r_price: "価格帯", r_wait: "待ち時間", r_book: "予約", r_en: "外国語メニュー",
+    r_card: "海外カード", r_late: "深夜営業", r_best: "おすすめ人数", r_one: "ひとこと",
+    yes: "あり", ok: "OK", cash: "現金", no: "なし", ppl: "人", grp: "6+",
+    blended: "統合評価",
+    ai_t: "🤖 AI要約 — 韓国語レビューの実際の声",
+    ai_src: n => `Naver · Kakao · Catchtableの韓国語レビュー${n}件を要約・翻訳（サンプルデータ）`,
+    ai_note: "※ 要約の日本語版は準備中です — 現在は英語のみ",
+    good: "知っておくと便利",
+    g_en: "外国語メニュー", g_card: "海外カード", g_wait: "待ち時間目安", g_best: "おすすめ人数",
+    v_en_y: "あり ✓", v_en_n: "なし — 指差し注文OK", v_card_y: "利用可 ✓", v_card_n: "現金持参",
+    groups: "6人以上の団体",
+    act_book: "Catchtable Globalで予約", act_book_s: "韓国の電話番号は不要です",
+    act_phone: "電話予約のみ", act_phone_s: "旅行者向け電話代行 — 近日公開",
+    act_walk: "予約不要", act_walk_s: "そのまま入店OK — 上の待ち時間メモを確認",
+    act_naver: "経路 — Naver Map", act_naver_s: "韓国内の経路案内に最適",
+    act_google: "Google Mapsで開く", act_google_s: "使い慣れた地図で",
+    close: "閉じる",
+    t_max3: "比較できるのは3店舗までです",
+    t_min2: "2店舗以上選んでください",
+    t_book: "デモ — 本番ではCatchtable Globalの該当店舗ページへ",
+    t_phone: "デモ — v2構想：お店への電話をこちらで代行します",
+    t_walk: "予約不要 — そのままどうぞ 🙌",
+    t_naver: "デモ — 本番ではNaver Mapの徒歩経路を開きます",
+  },
+  ZH: {
+    sub: "像在地人一樣吃 · 首爾聖水洞",
+    party_any: "👥 不限人數", party_2: "2位", party_4: "4位", party_group: "6位以上",
+    tag_date: "💜 約會", tag_family: "👨‍👩‍👧 家庭", tag_engmenu: "🌐 外語菜單",
+    tag_card: "💳 可刷海外卡", tag_nowait: "⚡ 免排隊", tag_late: "🌙 深夜營業",
+    map_note: "示意地圖 · 正式版使用Naver/Kakao地圖SDK",
+    proto_note: "原型展示 — 12間店家皆為示範用樣本資料",
+    title_all: "聖水洞全部店家", title_match: "符合條件的店家",
+    n_of: (a, b) => `共${b}間，符合${a}間`,
+    wait_low: "幾乎不用等", wait_med: "普通", wait_high: "很長 (45分+)", wait_word: "候位",
+    reviews_src: n => `${n}則評論 · 3個來源`,
+    bdg_en: "外語菜單", bdg_card: "可刷海外卡", bdg_cash: "海外卡限現金",
+    bdg_late: "深夜營業", bdg_wait: "排隊名店", bdg_book: "可訂位", bdg_phone: "僅限電話訂位",
+    ai_label: "AI摘要", btn_detail: "詳情・訂位",
+    empty: "<b>沒有完全符合的店家。</b><br>試著移除一個條件 — 聖水洞不大，一定找得到。",
+    cmp_t: n => `比較${n}間店家`, cmp_s: "最多可選3間", cmp_go: "比較 →",
+    cmp_title: "並排比較",
+    r_rating: "評分", r_price: "價位", r_wait: "候位", r_book: "訂位", r_en: "外語菜單",
+    r_card: "海外卡", r_late: "深夜營業", r_best: "適合人數", r_one: "一句話",
+    yes: "有", ok: "OK", cash: "現金", no: "無", ppl: "位", grp: "6+",
+    blended: "綜合評分",
+    ai_t: "🤖 AI摘要 — 韓文評論的真實聲音",
+    ai_src: n => `彙整並翻譯自Naver · Kakao · Catchtable共${n}則韓文評論（樣本資料）`,
+    ai_note: "※ 摘要中文版即將推出 — 目前僅提供英文",
+    good: "行前須知",
+    g_en: "外語菜單", g_card: "海外卡", g_wait: "候位時間", g_best: "適合人數",
+    v_en_y: "有 ✓", v_en_n: "無 — 可用手指點餐", v_card_y: "可使用 ✓", v_card_n: "請備現金",
+    groups: "6位以上團體",
+    act_book: "透過Catchtable Global訂位", act_book_s: "不需要韓國電話號碼",
+    act_phone: "僅限電話訂位", act_phone_s: "旅客電話代訂服務 — 即將推出",
+    act_walk: "免訂位", act_walk_s: "直接入店 — 請參考上方候位說明",
+    act_naver: "路線 — Naver Map", act_naver_s: "韓國境內導航首選",
+    act_google: "在Google Maps開啟", act_google_s: "用你熟悉的地圖",
+    close: "關閉",
+    t_max3: "最多只能比較3間店家",
+    t_min2: "請至少選擇2間店家",
+    t_book: "示範 — 正式版將直接連到Catchtable Global店家頁",
+    t_phone: "示範 — v2構想：由我們替你打電話訂位",
+    t_walk: "免訂位 — 直接前往即可 🙌",
+    t_naver: "示範 — 正式版將開啟Naver Map步行路線",
+  },
+};
+
+/* ================= state ================= */
+let LANG = "EN";
+let fParty = "any";
+let fTags = new Set();
+let selected = null;
+let compare = [];
+
+/* ================= helpers ================= */
+const $ = s => document.querySelector(s);
+const T = () => I18N[LANG];
+const won = n => "₩".repeat(n);
+const waitLabel = w => w === "low" ? T().wait_low : w === "med" ? T().wait_med : T().wait_high;
+const resLabel = r => r === "catchtable" ? "Catchtable Global" : r === "phone" ? T().bdg_phone : T().act_walk;
+const totalReviews = p => p.reviews.naver + p.reviews.kakao + p.reviews.catch;
+
+function toast(msg) {
+  const t = $("#toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(t._h);
+  t._h = setTimeout(() => t.classList.remove("show"), 2600);
+}
+
+function matches(p) {
+  if (fParty !== "any") {
+    const need = fParty === "group" ? "group" : Number(fParty);
+    if (!p.party.includes(need)) return false;
+  }
+  for (const t of fTags) {
+    if (t === "engmenu") { if (!p.engMenu) return false; }
+    else if (t === "card") { if (!p.cardOk) return false; }
+    else if (t === "nowait") { if (p.wait !== "low") return false; }
+    else if (t === "late") { if (!p.late) return false; }
+    else if (!p.tags.includes(t)) return false;
+  }
+  return true;
+}
+
+/* ================= map ================= */
+const B = { latMin: 37.5405, latMax: 37.5488, lngMin: 127.0480, lngMax: 127.0615 };
+const MW = 448, MH = 250;
+const X = lng => (lng - B.lngMin) / (B.lngMax - B.lngMin) * MW;
+const Y = lat => MH - (lat - B.latMin) / (B.latMax - B.latMin) * MH;
+
+function drawMap() {
+  const svg = $("#map");
+  const road = (x1,y1,x2,y2,w) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--map-road)" stroke-width="${w}" stroke-linecap="round"/>`;
+  let h = "";
+  h += `<rect x="0" y="40" width="86" height="180" rx="14" fill="var(--map-park)"/>`;
+  h += `<text x="43" y="132" text-anchor="middle" class="maplabel">Seoul Forest</text>`;
+  h += `<rect x="0" y="234" width="${MW}" height="16" fill="var(--map-water)"/>`;
+  h += road(0, 210, MW, 198, 13);
+  h += road(96, 0, 88, 250, 10);
+  h += road(0, 78, MW, 66, 9);
+  h += road(150, 250, 168, 0, 8);
+  h += road(150, 172, 448, 158, 8);
+  h += road(280, 250, 292, 0, 7);
+  h += road(370, 250, 378, 0, 6);
+  h += road(96, 120, 448, 112, 6);
+  h += `<g><rect x="118" y="196" width="10" height="10" rx="2" fill="#2d9d54"/><text x="134" y="205" class="stlabel">Ttukseom Stn (2)</text></g>`;
+  h += `<g><rect x="356" y="152" width="10" height="10" rx="2" fill="#2d9d54"/><text x="352" y="148" class="stlabel" text-anchor="end">Seongsu Stn (2)</text></g>`;
+  svg.innerHTML = h + `<g id="pins"></g>`;
+  drawPins();
+}
+
+function drawPins() {
+  const g = $("#pins");
+  let h = "";
+  PLACES.forEach((p, i) => {
+    const ok = matches(p);
+    const sel = selected === p.id;
+    const x = X(p.lng).toFixed(1), y = Y(p.lat).toFixed(1);
+    const r = sel ? 11 : 9;
+    h += `<g class="pin ${ok ? "" : "dim"} ${sel ? "sel" : ""}" data-id="${p.id}">
+      <circle cx="${x}" cy="${y}" r="16" fill="transparent"/>
+      <circle class="dot" cx="${x}" cy="${y}" r="${r}"/>
+      <text x="${x}" y="${Number(y)+3.4}">${i+1}</text>
+    </g>`;
+  });
+  g.innerHTML = h;
+  g.querySelectorAll(".pin").forEach(el => {
+    el.addEventListener("click", () => {
+      const id = el.getAttribute("data-id");
+      selected = selected === id ? null : id;
+      render();
+      if (selected) {
+        const card = document.getElementById("card-" + id);
+        if (card) card.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  });
+}
+
+/* ================= cards ================= */
+function badgeRow(p) {
+  const t = T();
+  const b = [];
+  b.push(`<span class="bdg b-gray">${won(p.price)}</span>`);
+  if (p.engMenu) b.push(`<span class="bdg b-blue">${t.bdg_en}</span>`);
+  if (p.cardOk) b.push(`<span class="bdg b-green">${t.bdg_card}</span>`);
+  else b.push(`<span class="bdg b-amber">${t.bdg_cash}</span>`);
+  if (p.late) b.push(`<span class="bdg b-gray">${t.bdg_late}</span>`);
+  if (p.wait === "high") b.push(`<span class="bdg b-amber">${t.bdg_wait}</span>`);
+  if (p.reserve === "catchtable") b.push(`<span class="bdg b-brand">${t.bdg_book}</span>`);
+  if (p.reserve === "phone") b.push(`<span class="bdg b-amber">${t.bdg_phone}</span>`);
+  return b.join("");
+}
+
+function renderCards() {
+  const t = T();
+  const wrap = $("#cards");
+  const shown = PLACES.filter(matches);
+  $("#list-n").textContent = t.n_of(shown.length, PLACES.length);
+  $("#list-title").textContent = (fParty === "any" && fTags.size === 0) ? t.title_all : t.title_match;
+  wrap.textContent = "";
+  if (shown.length === 0) {
+    const d = document.createElement("div");
+    d.className = "empty";
+    d.innerHTML = t.empty;
+    wrap.appendChild(d);
+    return;
+  }
+  shown.forEach(p => {
+    const idx = PLACES.indexOf(p) + 1;
+    const card = document.createElement("div");
+    card.className = "card" + (selected === p.id ? " sel" : "");
+    card.id = "card-" + p.id;
+    const inCmp = compare.includes(p.id);
+    card.innerHTML = `
+      <div class="card-top">
+        <div>
+          <h3>${idx}. ${p.en}<span class="kr">${p.kr}</span></h3>
+          <div class="meta">${p.cat} · <b>${waitLabel(p.wait)}</b> ${t.wait_word}</div>
+        </div>
+        <div class="score">
+          <div class="val">★ ${p.rating.toFixed(1)}</div>
+          <div class="src">${t.reviews_src(totalReviews(p).toLocaleString())}</div>
+        </div>
+      </div>
+      <div class="badges">${badgeRow(p)}</div>
+      <div class="summ"><span class="ai">${t.ai_label}</span><br>${p.sum.dish}</div>
+      <div class="card-actions">
+        <button class="btn btn-primary" data-a="detail">${t.btn_detail}</button>
+        <button class="btn btn-cmp ${inCmp ? "on" : ""}" data-a="cmp" aria-label="Add to compare">⇄</button>
+      </div>`;
+    card.addEventListener("click", e => {
+      const a = e.target.getAttribute && e.target.getAttribute("data-a");
+      if (a === "cmp") { e.stopPropagation(); toggleCompare(p.id); return; }
+      openDetail(p.id);
+    });
+    wrap.appendChild(card);
+  });
+}
+
+/* ================= compare ================= */
+function toggleCompare(id) {
+  if (compare.includes(id)) compare = compare.filter(x => x !== id);
+  else {
+    if (compare.length >= 3) { toast(T().t_max3); return; }
+    compare.push(id);
+  }
+  renderCompareBar();
+  renderCards();
+}
+function renderCompareBar() {
+  const bar = $("#cmp-bar");
+  if (compare.length === 0) { bar.classList.remove("show"); return; }
+  bar.classList.add("show");
+  $("#cmp-t").textContent = T().cmp_t(compare.length);
+  $("#cmp-s").textContent = compare.map(id => PLACES.find(p => p.id === id).en).join(" · ");
+}
+function openCompare() {
+  const t = T();
+  if (compare.length < 2) { toast(t.t_min2); return; }
+  const ps = compare.map(id => PLACES.find(p => p.id === id));
+  const row = (label, fn) => `<tr><td>${label}</td>${ps.map(p => `<td>${fn(p)}</td>`).join("")}</tr>`;
+  const html = `
+    <h2>${t.cmp_title}</h2>
+    <table class="cmp-table">
+      <tr><th></th>${ps.map(p => `<th><span class="name-cell">${p.en}</span></th>`).join("")}</tr>
+      ${row(t.r_rating, p => `★ ${p.rating.toFixed(1)} <span style="color:var(--ink-3)">(${totalReviews(p).toLocaleString()})</span>`)}
+      ${row(t.r_price, p => won(p.price))}
+      ${row(t.r_wait, p => waitLabel(p.wait))}
+      ${row(t.r_book, p => resLabel(p.reserve))}
+      ${row(t.r_en, p => p.engMenu ? `<span class="yes">${t.yes}</span>` : `<span class="no">${t.no}</span>`)}
+      ${row(t.r_card, p => p.cardOk ? `<span class="yes">${t.ok}</span>` : `<span class="no">${t.cash}</span>`)}
+      ${row(t.r_late, p => p.late ? `<span class="yes">${t.yes}</span>` : `<span class="no">${t.no}</span>`)}
+      ${row(t.r_best, p => p.party.map(x => x === "group" ? t.grp : x).join(", ") + " " + t.ppl)}
+      ${row(t.r_one, p => `<span style="font-size:11.5px">${p.sum.vibe}</span>`)}
+    </table>
+    <div class="act-col">
+      <button class="act act-g" id="cmp-close"><div>${t.close}</div><span class="arr">✕</span></button>
+    </div>`;
+  openSheet(html);
+  $("#cmp-close").addEventListener("click", closeSheet);
+}
+
+/* ================= detail ================= */
+function openDetail(id) {
+  const t = T();
+  const p = PLACES.find(x => x.id === id);
+  if (!p) return;
+  selected = id;
+  render();
+  const html = `
+    <h2>${p.en} <span class="kr2">${p.kr}</span></h2>
+    <div class="meta" style="margin-top:2px">${p.cat} · ${won(p.price)}</div>
+    <div class="rating-row">
+      <div class="rt"><div class="v">★ ${p.rating.toFixed(1)}</div><div class="l">${t.blended}</div></div>
+      <div class="rt"><div class="v">${p.reviews.naver.toLocaleString()}</div><div class="l">Naver</div></div>
+      <div class="rt"><div class="v">${p.reviews.kakao.toLocaleString()}</div><div class="l">Kakao</div></div>
+      <div class="rt"><div class="v">${p.reviews.catch.toLocaleString()}</div><div class="l">Catchtable</div></div>
+    </div>
+    <div class="ai-box">
+      <div class="ai-t">${t.ai_t}</div>
+      <ul>
+        <li class="dish">${p.sum.dish}</li>
+        <li class="vibe">${p.sum.vibe}</li>
+        <li class="wait">${p.sum.wait}</li>
+        <li class="tip">${p.sum.tip}</li>
+      </ul>
+      <div class="ai-src">${t.ai_src(totalReviews(p).toLocaleString())}</div>
+      ${t.ai_note ? `<div class="ai-note">${t.ai_note}</div>` : ""}
+    </div>
+    <div class="sec-t">${t.good}</div>
+    <div class="info-grid">
+      <div class="ig"><div class="l">${t.g_en}</div><div class="v">${p.engMenu ? t.v_en_y : t.v_en_n}</div></div>
+      <div class="ig"><div class="l">${t.g_card}</div><div class="v">${p.cardOk ? t.v_card_y : t.v_card_n}</div></div>
+      <div class="ig"><div class="l">${t.g_wait}</div><div class="v">${waitLabel(p.wait)}</div></div>
+      <div class="ig"><div class="l">${t.g_best}</div><div class="v">${p.party.map(x => x === "group" ? t.groups : x + " " + t.ppl).join(" · ")}</div></div>
+    </div>
+    <div class="act-col">
+      ${p.reserve === "catchtable"
+        ? `<button class="act act-res" data-act="book"><div>${t.act_book}<span class="sub">${t.act_book_s}</span></div><span class="arr">›</span></button>`
+        : p.reserve === "phone"
+        ? `<button class="act act-res" data-act="phone"><div>${t.act_phone}<span class="sub">${t.act_phone_s}</span></div><span class="arr">›</span></button>`
+        : `<button class="act act-res" data-act="walkin"><div>${t.act_walk}<span class="sub">${t.act_walk_s}</span></div><span class="arr">›</span></button>`}
+      <button class="act act-dir" data-act="naver"><div>${t.act_naver}<span class="sub">${t.act_naver_s}</span></div><span class="arr">›</span></button>
+      <button class="act act-g" data-act="google"><div>${t.act_google}<span class="sub">${t.act_google_s}</span></div><span class="arr">›</span></button>
+    </div>`;
+  openSheet(html);
+  $("#sheet-body").querySelectorAll("[data-act]").forEach(b => {
+    b.addEventListener("click", () => {
+      const a = b.getAttribute("data-act");
+      if (a === "book") toast(t.t_book);
+      else if (a === "phone") toast(t.t_phone);
+      else if (a === "walkin") toast(t.t_walk);
+      else if (a === "naver") toast(t.t_naver);
+      else if (a === "google") window.open(`https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`, "_blank");
+    });
+  });
+}
+
+/* ================= sheet ================= */
+function openSheet(html) {
+  $("#sheet-body").innerHTML = html;
+  $("#overlay").classList.add("show");
+  $("#sheet").classList.add("show");
+}
+function closeSheet() {
+  $("#overlay").classList.remove("show");
+  $("#sheet").classList.remove("show");
+}
+$("#overlay").addEventListener("click", closeSheet);
+
+/* ================= static i18n ================= */
+function applyStatic() {
+  const t = T();
+  document.querySelectorAll("[data-i18n]").forEach(el => {
+    const k = el.getAttribute("data-i18n");
+    if (typeof t[k] === "string") el.textContent = t[k];
+  });
+  document.documentElement.lang = LANG === "EN" ? "en" : LANG === "JA" ? "ja" : "zh-Hant";
+}
+
+/* ================= events ================= */
+$("#f-party").addEventListener("click", e => {
+  const v = e.target.getAttribute && e.target.getAttribute("data-v");
+  if (!v) return;
+  fParty = v;
+  $("#f-party").querySelectorAll(".chip").forEach(c => c.classList.toggle("on-dark", c.getAttribute("data-v") === v));
+  render();
+});
+$("#f-tags").addEventListener("click", e => {
+  const v = e.target.getAttribute && e.target.getAttribute("data-v");
+  if (!v) return;
+  if (fTags.has(v)) fTags.delete(v); else fTags.add(v);
+  e.target.classList.toggle("on");
+  render();
+});
+$("#lang").addEventListener("click", e => {
+  const l = e.target.getAttribute && e.target.getAttribute("data-l");
+  if (!l || l === LANG) return;
+  LANG = l;
+  $("#lang").querySelectorAll("button").forEach(b => b.classList.toggle("on", b.getAttribute("data-l") === l));
+  applyStatic();
+  render();
+  if ($("#sheet").classList.contains("show")) closeSheet();
+});
+$("#cmp-go").addEventListener("click", openCompare);
+
+/* ================= boot ================= */
+function render() { drawPins(); renderCards(); renderCompareBar(); }
+applyStatic();
+drawMap();
+render();
+/* deep link: /?place=p4 opens that venue (used by static SEO pages) */
+const qp = new URLSearchParams(location.search).get("place");
+if (qp && PLACES.some(p => p.id === qp)) openDetail(qp);
+</script>
+</body>
+</html>
