@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://REPLACE-ME.github.io/tablekorea/sitemap.xml
+Sitemap: https://stacks112.github.io/tablekorea/sitemap.xml
