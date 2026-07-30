@@ -130,6 +130,8 @@
   .ai-box li.wait::before { content: "⏱️"; }
   .ai-box li.tip::before { content: "💡"; }
   .ai-src { font-size: 10.5px; color: var(--ink-3); margin-top: 8px; }
+  .src-links a { display: block; font-size: 12.5px; color: var(--blue); text-decoration: none; padding: 3px 0; }
+  .src-links a:hover { text-decoration: underline; }
   .ai-note { font-size: 11px; color: var(--amber); margin-top: 6px; font-weight: 600; }
   .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
   .ig { background: var(--bg); border-radius: 10px; padding: 9px 11px; }
@@ -232,46 +234,52 @@
 const PLACES = [
   {
     "id": "p1",
-    "en": "Seongsu Charcoal Galbi",
-    "kr": "성수숯불갈비",
-    "cat": "Korean BBQ",
-    "price": 3,
-    "lat": 37.5449,
-    "lng": 127.0559,
+    "en": "Somunnan Seongsu Gamjatang",
+    "kr": "소문난성수감자탕",
+    "cat": "Gamjatang · Korean",
+    "price": 2,
+    "lat": 37.5425,
+    "lng": 127.0552,
+    "coordsApprox": true,
+    "addr": "서울 성동구 연무장길 45",
     "party": [
       2,
       4,
       "group"
     ],
     "tags": [
-      "date"
+      "family"
     ],
-    "engMenu": true,
-    "cardOk": true,
-    "late": true,
-    "wait": "med",
-    "reserve": "catchtable",
-    "rating": 4.6,
-    "reviews": {
-      "naver": 1284,
-      "kakao": 412,
-      "catch": 198
-    },
+    "engMenu": null,
+    "cardOk": null,
+    "late": null,
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "KoreaToDo Seongsu Guide",
+        "u": "https://www.koreatodo.com/seongsu"
+      }
+    ],
     "sum": {
-      "dish": "Nearly every review orders the marinated beef galbi + naengmyeon combo to finish.",
-      "vibe": "Loud, smoky, classic K-BBQ energy — staff grill the meat for you.",
-      "wait": "~30 min at dinner peak (7–8pm). Walk-ins OK before 6pm.",
-      "tip": "Reviewers say solo staff speak basic English and there's a photo menu."
+      "dish": "Pork-bone gamjatang stew — the house specialty since the shop opened in 1983.",
+      "vibe": "Old-school local institution that survived Seongsu's factory-to-hip transformation.",
+      "wait": "Wait times not verified yet — big local following, so peak meal hours get busy.",
+      "tip": "One of the longest-running restaurants in the area; a safe pick for a first taste of gamjatang."
     }
   },
   {
     "id": "p2",
-    "en": "Brick Lane Coffee",
-    "kr": "브릭레인커피",
-    "cat": "Cafe · Bakery",
+    "en": "Daelim Changgo",
+    "kr": "대림창고",
+    "cat": "Cafe · Gallery",
     "price": 2,
-    "lat": 37.5421,
-    "lng": 127.0568,
+    "lat": 37.5426,
+    "lng": 127.0557,
+    "coordsApprox": true,
+    "addr": "서울 성동구 성수이로 78",
     "party": [
       2,
       4
@@ -279,230 +287,187 @@ const PLACES = [
     "tags": [
       "date"
     ],
-    "engMenu": true,
-    "cardOk": true,
-    "late": false,
-    "wait": "low",
-    "reserve": "walkin",
-    "rating": 4.4,
-    "reviews": {
-      "naver": 2103,
-      "kakao": 876,
-      "catch": 0
-    },
+    "engMenu": null,
+    "cardOk": null,
+    "late": null,
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "KoreaToDo Seongsu Guide",
+        "u": "https://www.koreatodo.com/seongsu"
+      }
+    ],
     "sum": {
-      "dish": "Salt bread and hand-drip single origin are the two things everyone mentions.",
-      "vibe": "Renovated red-brick factory, industrial-cool — the 'Seongsu look'.",
-      "wait": "Seats turn over fast; weekends busy 2–5pm but queue moves quickly.",
-      "tip": "Order at the counter; card only, no cash — foreign cards fine."
+      "dish": "Coffee and brunch plates inside a converted red-brick warehouse.",
+      "vibe": "The symbol of Seongsu's factory-renovation cafe scene — part gallery, part cafe, huge ceilings.",
+      "wait": "Wait times not verified yet — weekend afternoons are the busiest window.",
+      "tip": "Come for the space as much as the menu; art installations rotate through the hall."
     }
   },
   {
     "id": "p3",
-    "en": "Chorong Kalguksu",
-    "kr": "초롱칼국수",
-    "cat": "Noodles · Local",
-    "price": 1,
-    "lat": 37.5462,
-    "lng": 127.0541,
+    "en": "Neungdong Minari",
+    "kr": "능동미나리 성수",
+    "cat": "Korean · Minari hotpot",
+    "price": 2,
+    "lat": 37.5424,
+    "lng": 127.0549,
+    "coordsApprox": true,
+    "addr": "서울 성동구 연무장길 42",
     "party": [
       2,
       4
     ],
     "tags": [
-      "family"
+      "family",
+      "date"
     ],
-    "engMenu": false,
-    "cardOk": true,
-    "late": false,
-    "wait": "low",
-    "reserve": "walkin",
-    "rating": 4.5,
-    "reviews": {
-      "naver": 934,
-      "kakao": 511,
-      "catch": 0
-    },
+    "engMenu": null,
+    "cardOk": null,
+    "late": null,
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "KoreaToDo Seongsu Guide",
+        "u": "https://www.koreatodo.com/seongsu"
+      }
+    ],
     "sum": {
-      "dish": "Hand-cut knife noodles in anchovy broth; kimchi is self-serve and praised.",
-      "vibe": "No-frills local lunch spot — plastic stools, fast service, mostly regulars.",
-      "wait": "None outside 12–1pm office rush.",
-      "tip": "Korean-only menu, but only 4 items — reviewers say pointing works fine."
+      "dish": "Water-parsley (minari) dishes — fresh, green, and hard to find done this well elsewhere.",
+      "vibe": "Clean modern-Korean spot; its Yongsan sibling has appeared in the Michelin Guide.",
+      "wait": "Wait times not verified yet.",
+      "tip": "Minari is the point — order whatever puts it front and center."
     }
   },
   {
     "id": "p4",
-    "en": "Forest Omakase",
-    "kr": "숲 오마카세",
-    "cat": "Sushi · Omakase",
-    "price": 3,
-    "lat": 37.5445,
-    "lng": 127.0505,
+    "en": "God Eat Holy Water",
+    "kr": "갓잇 성수 홀리워터",
+    "cat": "Mexican · Bar",
+    "price": 2,
+    "lat": 37.5432,
+    "lng": 127.0572,
+    "coordsApprox": true,
+    "addr": "서울 성동구 연무장7가길 10",
     "party": [
-      2
+      2,
+      4,
+      "group"
     ],
     "tags": [
       "date"
     ],
-    "engMenu": true,
-    "cardOk": true,
-    "late": false,
-    "wait": "low",
-    "reserve": "phone",
-    "rating": 4.8,
-    "reviews": {
-      "naver": 388,
-      "kakao": 102,
-      "catch": 341
-    },
+    "engMenu": null,
+    "cardOk": null,
+    "late": null,
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "KoreaToDo Seongsu Guide",
+        "u": "https://www.koreatodo.com/seongsu"
+      }
+    ],
     "sum": {
-      "dish": "12-course lunch omakase is the value pick (~₩60,000).",
-      "vibe": "8-seat counter facing Seoul Forest; quiet, intimate, chef chats in English.",
-      "wait": "Reservation-only — no walk-ins accepted.",
-      "tip": "Phone booking only. Ask your hotel concierge to call, or use our call service (coming soon)."
+      "dish": "Fajita sets are the crowd favorite, per local guides.",
+      "vibe": "Lively K-Mexican spot in the Yeonmujang-gil alleys — good for groups who want drinks with dinner.",
+      "wait": "Wait times not verified yet.",
+      "tip": "Mexican in Seoul runs Korean-spicy; ask for heat levels if you're sensitive."
     }
   },
   {
     "id": "p5",
-    "en": "Golmok Jeon & Makgeolli",
-    "kr": "골목전집",
-    "cat": "Korean pub",
+    "en": "Ppyeotanjip",
+    "kr": "뼈탄집 성수",
+    "cat": "Korean BBQ · Pork",
     "price": 2,
-    "lat": 37.5455,
-    "lng": 127.0585,
+    "lat": 37.546,
+    "lng": 127.0532,
+    "coordsApprox": true,
+    "addr": "서울 성동구 아차산로13길 2",
     "party": [
+      2,
       4,
       "group"
     ],
     "tags": [],
-    "engMenu": false,
-    "cardOk": false,
-    "late": true,
-    "wait": "high",
-    "reserve": "walkin",
-    "rating": 4.7,
-    "reviews": {
-      "naver": 1671,
-      "kakao": 723,
-      "catch": 0
-    },
+    "engMenu": null,
+    "cardOk": null,
+    "late": null,
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "KoreaToDo Seongsu Guide",
+        "u": "https://www.koreatodo.com/seongsu"
+      }
+    ],
     "sum": {
-      "dish": "Seafood pancake + house makgeolli; locals call it the best jeon in Seongsu.",
-      "vibe": "Retro alley pub, packed after 7pm, very local — almost no tourists.",
-      "wait": "45–60 min Fri/Sat nights. No waitlist app — you queue in person.",
-      "tip": "CASH ONLY for foreign cards (Korean cards OK). ATM is 2 min away."
+      "dish": "Aged pork bulgogi and galbi grilled over charcoal.",
+      "vibe": "Smoky, meat-first K-BBQ energy north of Seongsu station.",
+      "wait": "Wait times not verified yet — BBQ spots here peak 7–9pm.",
+      "tip": "Aged pork (숙성) is the differentiator versus a standard samgyeopsal joint."
     }
   },
   {
     "id": "p6",
-    "en": "Hanwoo & Bean",
-    "kr": "한우앤빈",
-    "cat": "Korean BBQ · Premium",
-    "price": 3,
-    "lat": 37.5416,
-    "lng": 127.0532,
-    "party": [
-      2,
-      4,
-      "group"
-    ],
-    "tags": [
-      "date",
-      "family"
-    ],
-    "engMenu": true,
-    "cardOk": true,
-    "late": true,
-    "wait": "med",
-    "reserve": "catchtable",
-    "rating": 4.5,
-    "reviews": {
-      "naver": 892,
-      "kakao": 301,
-      "catch": 264
-    },
-    "sum": {
-      "dish": "1++ hanwoo tasting set for two; doenjang stew finish is repeatedly praised.",
-      "vibe": "Modern, quieter than most BBQ spots — good for conversation.",
-      "wait": "Bookable, so near-zero if reserved. Walk-in ~20 min.",
-      "tip": "Has private rooms for 6–10 — reviewers recommend for family dinners."
-    }
-  },
-  {
-    "id": "p7",
-    "en": "Seongsu Brunch Works",
-    "kr": "성수브런치웍스",
-    "cat": "Brunch · Western",
+    "en": "bd Burger",
+    "kr": "bd버거",
+    "cat": "Burgers",
     "price": 2,
-    "lat": 37.5432,
-    "lng": 127.0596,
+    "lat": 37.5416,
+    "lng": 127.0546,
+    "coordsApprox": true,
+    "addr": "서울 성동구 성수이로14길 7",
     "party": [
       2,
       4
     ],
-    "tags": [
-      "date",
-      "family"
+    "tags": [],
+    "engMenu": null,
+    "cardOk": null,
+    "late": null,
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "KoreaToDo Seongsu Guide",
+        "u": "https://www.koreatodo.com/seongsu"
+      },
+      {
+        "n": "The Edit — 성수 맛집 리스트",
+        "u": "https://the-edit.co.kr/51537"
+      }
     ],
-    "engMenu": true,
-    "cardOk": true,
-    "late": false,
-    "wait": "med",
-    "reserve": "catchtable",
-    "rating": 4.3,
-    "reviews": {
-      "naver": 1105,
-      "kakao": 489,
-      "catch": 97
-    },
     "sum": {
-      "dish": "Ricotta pancakes and the bulgogi benedict (K-fusion) split reviewers evenly.",
-      "vibe": "Bright plant-filled space; stroller-friendly, lots of families on weekends.",
-      "wait": "Weekend 11am–1pm queue ~25 min; weekdays walk right in.",
-      "tip": "Full English menu + English-speaking staff — easiest brunch in the area."
+      "dish": "Handmade burgers with playful specials — the shrimp burger and fried button mushrooms get named repeatedly.",
+      "vibe": "Small indie burger shop loved by Seongsu office workers.",
+      "wait": "Wait times not verified yet — lunch rush is the pinch point.",
+      "tip": "Local writers recommend going beyond the basic cheeseburger; the odd-sounding specials deliver."
     }
   },
   {
-    "id": "p8",
-    "en": "Yeonmujang Dakhanmari",
-    "kr": "연무장닭한마리",
-    "cat": "Chicken hotpot",
-    "price": 2,
-    "lat": 37.5442,
-    "lng": 127.0577,
-    "party": [
-      4,
-      "group"
-    ],
-    "tags": [
-      "family"
-    ],
-    "engMenu": false,
-    "cardOk": true,
-    "late": true,
-    "wait": "med",
-    "reserve": "walkin",
-    "rating": 4.4,
-    "reviews": {
-      "naver": 756,
-      "kakao": 388,
-      "catch": 0
-    },
-    "sum": {
-      "dish": "Whole chicken hotpot for sharing — add the hand-cut noodles at the end.",
-      "vibe": "Steamy, communal, big round tables — made for groups of 4–8.",
-      "wait": "~20 min at dinner; big tables free up slowly.",
-      "tip": "Menu is Korean-only but there are only 3 options; staff gesture the steps."
-    }
-  },
-  {
-    "id": "p9",
-    "en": "Vegan Seongsu Table",
-    "kr": "비건성수식탁",
-    "cat": "Vegan · Korean",
-    "price": 2,
-    "lat": 37.5468,
-    "lng": 127.0563,
+    "id": "p7",
+    "en": "Seongsu Darak",
+    "kr": "성수다락",
+    "cat": "Fusion · Omurice",
+    "price": 1,
+    "lat": 37.5408,
+    "lng": 127.052,
+    "coordsApprox": true,
+    "addr": "서울 성동구 뚝섬로9길 20",
     "party": [
       2,
       4
@@ -510,119 +475,387 @@ const PLACES = [
     "tags": [
       "date"
     ],
-    "engMenu": true,
-    "cardOk": true,
-    "late": false,
-    "wait": "low",
-    "reserve": "catchtable",
-    "rating": 4.6,
-    "reviews": {
-      "naver": 412,
-      "kakao": 156,
-      "catch": 88
-    },
+    "engMenu": null,
+    "cardOk": null,
+    "late": null,
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "KoreaToDo Seongsu Guide",
+        "u": "https://www.koreatodo.com/seongsu"
+      }
+    ],
     "sum": {
-      "dish": "Temple-style mushroom bowl; vegan kimchi jjigae surprises meat-eaters.",
-      "vibe": "Calm, minimalist; popular with international long-stay visitors.",
-      "wait": "Rarely more than 10 min.",
-      "tip": "One of very few fully-vegan Korean places east of the river — book ahead Sundays."
+      "dish": "Attic omurice and rosé pasta — comfort-food fusion at friendly prices.",
+      "vibe": "Cozy, casual, date-friendly without the price tag.",
+      "wait": "Wait times not verified yet.",
+      "tip": "Good budget option when the trendy spots' queues are out of hand."
     }
   },
   {
-    "id": "p10",
-    "en": "Ttukseom Grilled Fish",
-    "kr": "뚝섬생선구이",
-    "cat": "Grilled fish set",
+    "id": "p8",
+    "en": "Menchuru",
+    "kr": "멘츄루 성수",
+    "cat": "Ramen · Japanese",
     "price": 1,
-    "lat": 37.5476,
-    "lng": 127.0522,
+    "lat": 37.5448,
+    "lng": 127.0546,
+    "coordsApprox": true,
+    "addr": "서울 성동구 성수이로20길 10",
     "party": [
-      2,
-      4
+      2
     ],
-    "tags": [
-      "family"
+    "tags": [],
+    "engMenu": null,
+    "cardOk": null,
+    "late": null,
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "KoreaToDo Seongsu Guide",
+        "u": "https://www.koreatodo.com/seongsu"
+      }
     ],
-    "engMenu": false,
-    "cardOk": true,
-    "late": false,
-    "wait": "low",
-    "reserve": "walkin",
-    "rating": 4.3,
-    "reviews": {
-      "naver": 645,
-      "kakao": 290,
-      "catch": 0
-    },
     "sum": {
-      "dish": "₩12,000 mackerel set with 8 banchan — reviewers call it the best-value lunch nearby.",
-      "vibe": "Homey, ajumma-run; feels like a Korean grandmother's kitchen.",
-      "wait": "Office rush 12–1pm only.",
-      "tip": "Point at the fish display to order — no shared language needed, and it works."
+      "dish": "Rich-broth ramen with housemade karaage on the side.",
+      "vibe": "Counter-style Japanese ramen shop — quick, solo-friendly.",
+      "wait": "Wait times not verified yet.",
+      "tip": "Ramen counters turn over fast even with a line; don't be scared off by a short queue."
     }
   },
   {
-    "id": "p11",
-    "en": "Late Night Gopchang Alley",
-    "kr": "심야곱창골목",
-    "cat": "Gopchang · Late night",
+    "id": "p9",
+    "en": "Seoul Brewery Seongsu",
+    "kr": "서울브루어리 성수",
+    "cat": "Craft beer · Brewery",
     "price": 2,
-    "lat": 37.5427,
-    "lng": 127.0549,
+    "lat": 37.5422,
+    "lng": 127.0536,
+    "coordsApprox": true,
+    "addr": "서울 성동구 연무장길 28-12",
     "party": [
       2,
       4,
       "group"
     ],
-    "tags": [],
-    "engMenu": false,
-    "cardOk": true,
+    "tags": [
+      "date"
+    ],
+    "engMenu": null,
+    "cardOk": null,
     "late": true,
-    "wait": "high",
-    "reserve": "walkin",
-    "rating": 4.5,
-    "reviews": {
-      "naver": 1320,
-      "kakao": 604,
-      "catch": 0
-    },
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "KoreaToDo Seongsu Guide",
+        "u": "https://www.koreatodo.com/seongsu"
+      }
+    ],
     "sum": {
-      "dish": "Beef gopchang mixed grill; fried rice finish is described as mandatory.",
-      "vibe": "Open till 2am — where locals go after round one. Loud and fun.",
-      "wait": "Peak 9–11pm, ~40 min. After midnight you walk in.",
-      "tip": "Adventurous eaters only — reviews warn first-timers to start with the mixed set."
+      "dish": "House-brewed craft beers with rotating taps.",
+      "vibe": "Multi-floor brewery with indoor and outdoor lounges — one of Seongsu's signature night spots.",
+      "wait": "Wait times not verified yet — weekend evenings fill up.",
+      "tip": "Taprooms handle groups better than most Seongsu venues; a solid plan-B for 6+."
     }
   },
   {
-    "id": "p12",
-    "en": "Seoul Forest Pasta Bar",
-    "kr": "서울숲파스타바",
-    "cat": "Italian · Wine",
+    "id": "p10",
+    "en": "Standard Bread",
+    "kr": "스탠다드브레드 성수",
+    "cat": "Bakery · Brunch",
     "price": 2,
-    "lat": 37.5459,
-    "lng": 127.0498,
+    "lat": 37.5442,
+    "lng": 127.0538,
+    "coordsApprox": true,
+    "addr": "서울 성동구 성수이로18길 37",
+    "party": [
+      2,
+      4
+    ],
+    "tags": [
+      "date"
+    ],
+    "engMenu": null,
+    "cardOk": null,
+    "late": null,
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "KoreaToDo Seongsu Guide",
+        "u": "https://www.koreatodo.com/seongsu"
+      }
+    ],
+    "sum": {
+      "dish": "Crème brûlée French toast is the signature local guides call out.",
+      "vibe": "Bright bakery-cafe good for a slow morning before the crowds.",
+      "wait": "Wait times not verified yet.",
+      "tip": "Bakery items sell through — earlier is better for the signature toast."
+    }
+  },
+  {
+    "id": "p11",
+    "en": "Maman Gelato",
+    "kr": "마몽 젤라또 성수",
+    "cat": "Gelato · Dessert",
+    "price": 1,
+    "lat": 37.5436,
+    "lng": 127.058,
+    "coordsApprox": true,
+    "addr": "서울 성동구 연무장9길 8",
     "party": [
       2
     ],
     "tags": [
       "date"
     ],
-    "engMenu": true,
-    "cardOk": true,
-    "late": true,
-    "wait": "med",
-    "reserve": "catchtable",
-    "rating": 4.4,
-    "reviews": {
-      "naver": 980,
-      "kakao": 344,
-      "catch": 151
-    },
+    "engMenu": null,
+    "cardOk": null,
+    "late": null,
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "KoreaToDo Seongsu Guide",
+        "u": "https://www.koreatodo.com/seongsu"
+      }
+    ],
     "sum": {
-      "dish": "Perilla-oil pasta (K-Italian) is the signature everyone photographs.",
-      "vibe": "Dim, 12-seat wine bar; couples only by design — no groups.",
-      "wait": "Bookable; walk-in chances low after 7pm.",
-      "tip": "Corkage-free Mondays gets mentioned in half the recent reviews."
+      "dish": "Rotating gelato and sorbet flavors made in-house.",
+      "vibe": "Tiny dessert stop — the standard 'one more thing' after dinner in the alleys.",
+      "wait": "Wait times not verified yet.",
+      "tip": "Gelato is the easiest zero-language-barrier order in Seongsu: point and smile."
+    }
+  },
+  {
+    "id": "p12",
+    "en": "Dojo",
+    "kr": "도죠",
+    "cat": "Japanese · Izakaya",
+    "price": 2,
+    "lat": 37.5455,
+    "lng": 127.0552,
+    "coordsApprox": true,
+    "addr": "서울 성동구 성수이로 126",
+    "party": [
+      2,
+      4
+    ],
+    "tags": [
+      "date"
+    ],
+    "engMenu": null,
+    "cardOk": null,
+    "late": null,
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "The Edit — 성수 맛집 리스트",
+        "u": "https://the-edit.co.kr/51537"
+      }
+    ],
+    "sum": {
+      "dish": "Karaage with a famously thin, crackly crust, plus okonomiyaki.",
+      "vibe": "Izakaya-style Japanese spot a Seongsu local ranked among their nine favorites.",
+      "wait": "Wait times not verified yet.",
+      "tip": "Pairs naturally with a highball; treat it as dinner-plus-drinks rather than a quick meal."
+    }
+  },
+  {
+    "id": "p13",
+    "en": "Seongsujang",
+    "kr": "성수장",
+    "cat": "Chinese · Noodles",
+    "price": 1,
+    "lat": 37.5463,
+    "lng": 127.0525,
+    "coordsApprox": true,
+    "addr": "서울 성동구 아차산로11길 11",
+    "party": [
+      2,
+      4
+    ],
+    "tags": [
+      "family"
+    ],
+    "engMenu": null,
+    "cardOk": null,
+    "late": null,
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "The Edit — 성수 맛집 리스트",
+        "u": "https://the-edit.co.kr/51537"
+      }
+    ],
+    "sum": {
+      "dish": "Ganjjajang (black-bean noodles) with unusually thin noodles, and tangsuyuk.",
+      "vibe": "No-frills Korean-Chinese diner — where locals actually eat lunch.",
+      "wait": "Wait times not verified yet — office lunch rush 12–1pm.",
+      "tip": "Korean-Chinese food is its own genre; jjajang + tangsuyuk is the canonical first order."
+    }
+  },
+  {
+    "id": "p14",
+    "en": "Oegajip",
+    "kr": "외가집 성수",
+    "cat": "Korean BBQ · Charcoal",
+    "price": 2,
+    "lat": 37.542,
+    "lng": 127.0523,
+    "coordsApprox": true,
+    "addr": "서울 성동구 연무장길 17",
+    "party": [
+      2,
+      4,
+      "group"
+    ],
+    "tags": [],
+    "engMenu": null,
+    "cardOk": null,
+    "late": null,
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "The Edit — 성수 맛집 리스트",
+        "u": "https://the-edit.co.kr/51537"
+      }
+    ],
+    "sum": {
+      "dish": "Galmaegisal (pork skirt) grilled over briquettes, finished with kimchi-mari noodles.",
+      "vibe": "Classic charcoal-smoke Korean grill house on Yeonmujang-gil.",
+      "wait": "Wait times not verified yet — dinner peak applies.",
+      "tip": "Galmaegisal is the cut locals order here; don't default to samgyeopsal."
+    }
+  },
+  {
+    "id": "p15",
+    "en": "Kkubdang",
+    "kr": "꿉당",
+    "cat": "Korean BBQ · Aged pork",
+    "price": 3,
+    "lat": 37.545,
+    "lng": 127.0549,
+    "coordsApprox": true,
+    "addr": "서울 성동구 성수이로20길 10",
+    "party": [
+      2,
+      4
+    ],
+    "tags": [
+      "date"
+    ],
+    "engMenu": null,
+    "cardOk": null,
+    "late": null,
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "The Edit — 성수 맛집 리스트",
+        "u": "https://the-edit.co.kr/51537"
+      }
+    ],
+    "sum": {
+      "dish": "15-day aged pork neck that a local reviewer described as melting in the mouth, with kokumi rice.",
+      "vibe": "Premium-leaning pork grill — one of Seongsu's best-known meat destinations.",
+      "wait": "Wait times not verified yet — widely known, so plan around peak hours.",
+      "tip": "This is the splurge pick among Seongsu pork spots; come hungry and unhurried."
+    }
+  },
+  {
+    "id": "p16",
+    "en": "Woori Maki",
+    "kr": "우리마키",
+    "cat": "Japanese · Futomaki",
+    "price": 2,
+    "lat": 37.5409,
+    "lng": 127.0532,
+    "coordsApprox": true,
+    "addr": "서울 성동구 성수이로7길 32",
+    "party": [
+      2
+    ],
+    "tags": [
+      "date"
+    ],
+    "engMenu": null,
+    "cardOk": null,
+    "late": null,
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "The Edit — 성수 맛집 리스트",
+        "u": "https://the-edit.co.kr/51537"
+      }
+    ],
+    "sum": {
+      "dish": "Futomaki (fat rolls) a local writer described as ingredients unfolding in the mouth.",
+      "vibe": "Small, quiet roll specialist — a light-but-special lunch.",
+      "wait": "Wait times not verified yet.",
+      "tip": "Small kitchens sell out; earlier lunch beats later lunch here."
+    }
+  },
+  {
+    "id": "p17",
+    "en": "Ottugi Sikpum",
+    "kr": "오뚜기식품",
+    "cat": "Ga-maek · Korean pub",
+    "price": 1,
+    "lat": 37.5465,
+    "lng": 127.0552,
+    "coordsApprox": true,
+    "addr": "서울 성동구 아차산로17길 13",
+    "party": [
+      2,
+      4
+    ],
+    "tags": [],
+    "engMenu": null,
+    "cardOk": null,
+    "late": true,
+    "wait": null,
+    "reserve": "unknown",
+    "rating": null,
+    "reviews": null,
+    "sources": [
+      {
+        "n": "The Edit — 성수 맛집 리스트",
+        "u": "https://the-edit.co.kr/51537"
+      }
+    ],
+    "sum": {
+      "dish": "Kimchi stew and rolled omelette, eaten with cheap cold beer.",
+      "vibe": "A 'ga-maek' — half corner-store, half pub. As local as Seongsu nightlife gets.",
+      "wait": "Wait times not verified yet.",
+      "tip": "Ga-maek culture = grab drinks from the fridge, order snacks, pay simple. A real only-in-Korea experience."
     }
   }
 ];
@@ -636,11 +869,16 @@ const I18N = {
     tag_date: "💜 Date night", tag_family: "👨‍👩‍👧 Family", tag_engmenu: "🇬🇧 English menu",
     tag_card: "💳 Foreign card OK", tag_nowait: "⚡ No wait", tag_late: "🌙 Open late",
     map_note: "Schematic map · production uses Naver/Kakao SDK",
-    proto_note: "Prototype — all 12 venues are illustrative sample data",
+    proto_note: "Early access — 17 real Seongsu venues from public sources · details being verified",
     title_all: "All spots in Seongsu", title_match: "Matching your situation",
     n_of: (a, b) => `${a} of ${b}`,
     wait_low: "Short / none", wait_med: "Moderate", wait_high: "Long (45m+)", wait_word: "wait",
-    reviews_src: n => `${n} reviews · 3 sources`,
+    reviews_src: n => `in ${n} guide${n > 1 ? "s" : ""}`,
+    unverified: "Being verified",
+    srcs: "Sources",
+    rev_soon: "⭐ Multi-platform review scores — coming soon",
+    act_check: "Check & book — Naver Map",
+    act_check_s: "Menus, photos, reviews & booking — Korea's most complete listing",
     bdg_en: "EN menu", bdg_card: "Foreign card OK", bdg_cash: "Cash for foreign cards",
     bdg_late: "Open late", bdg_wait: "Long waits", bdg_book: "Bookable", bdg_phone: "Phone booking only",
     ai_label: "AI SUMMARY", btn_detail: "Details & booking",
@@ -651,8 +889,8 @@ const I18N = {
     r_card: "Foreign card", r_late: "Open late", r_best: "Best for", r_one: "One-liner",
     yes: "Yes", ok: "OK", cash: "Cash", no: "No", ppl: "ppl", grp: "6+",
     blended: "blended",
-    ai_t: "🤖 AI SUMMARY — what Korean reviews actually say",
-    ai_src: n => `Summarized & translated from ${n} Korean reviews across Naver · Kakao · Catchtable (sample data)`,
+    ai_t: "🤖 AI SUMMARY — what local Korean guides say",
+    ai_src: "Distilled from the public guides & articles listed below — multi-platform review aggregation coming soon",
     ai_note: "",
     good: "Good to know",
     g_en: "English menu", g_card: "Foreign cards", g_wait: "Typical wait", g_best: "Best for",
@@ -677,11 +915,16 @@ const I18N = {
     tag_date: "💜 デート", tag_family: "👨‍👩‍👧 家族", tag_engmenu: "🌐 外国語メニュー",
     tag_card: "💳 海外カードOK", tag_nowait: "⚡ 待ちなし", tag_late: "🌙 深夜営業",
     map_note: "略地図 · 本番はNaver/Kakao地図SDKを使用",
-    proto_note: "プロトタイプ — 12店舗はすべてサンプルデータです",
+    proto_note: "アーリーアクセス — 公開情報に基づく聖水の実在店舗17件・詳細は確認中",
     title_all: "聖水の全スポット", title_match: "条件に合うお店",
     n_of: (a, b) => `${b}件中${a}件`,
     wait_low: "ほぼなし", wait_med: "普通", wait_high: "長い (45分+)", wait_word: "待ち",
-    reviews_src: n => `レビュー${n}件 · 3ソース`,
+    reviews_src: n => `ガイド${n}件に掲載`,
+    unverified: "確認中",
+    srcs: "出典",
+    rev_soon: "⭐ 複数プラットフォーム評価 — 近日対応",
+    act_check: "確認・予約 — Naver Map",
+    act_check_s: "メニュー・写真・レビュー・予約情報が最も充実",
     bdg_en: "外国語メニュー", bdg_card: "海外カードOK", bdg_cash: "海外カードは現金のみ",
     bdg_late: "深夜営業", bdg_wait: "行列店", bdg_book: "予約可", bdg_phone: "電話予約のみ",
     ai_label: "AI要約", btn_detail: "詳細・予約",
@@ -692,8 +935,8 @@ const I18N = {
     r_card: "海外カード", r_late: "深夜営業", r_best: "おすすめ人数", r_one: "ひとこと",
     yes: "あり", ok: "OK", cash: "現金", no: "なし", ppl: "人", grp: "6+",
     blended: "統合評価",
-    ai_t: "🤖 AI要約 — 韓国語レビューの実際の声",
-    ai_src: n => `Naver · Kakao · Catchtableの韓国語レビュー${n}件を要約・翻訳（サンプルデータ）`,
+    ai_t: "🤖 AI要約 — 地元の韓国語ガイドの声",
+    ai_src: "下記の公開ガイド・記事をもとに要約 — 複数プラットフォームのレビュー統合は準備中",
     ai_note: "※ 要約の日本語版は準備中です — 現在は英語のみ",
     good: "知っておくと便利",
     g_en: "外国語メニュー", g_card: "海外カード", g_wait: "待ち時間目安", g_best: "おすすめ人数",
@@ -718,11 +961,16 @@ const I18N = {
     tag_date: "💜 約會", tag_family: "👨‍👩‍👧 家庭", tag_engmenu: "🌐 外語菜單",
     tag_card: "💳 可刷海外卡", tag_nowait: "⚡ 免排隊", tag_late: "🌙 深夜營業",
     map_note: "示意地圖 · 正式版使用Naver/Kakao地圖SDK",
-    proto_note: "原型展示 — 12間店家皆為示範用樣本資料",
+    proto_note: "搶先版 — 17間聖水洞真實店家（公開資料）・細節確認中",
     title_all: "聖水洞全部店家", title_match: "符合條件的店家",
     n_of: (a, b) => `共${b}間，符合${a}間`,
     wait_low: "幾乎不用等", wait_med: "普通", wait_high: "很長 (45分+)", wait_word: "候位",
-    reviews_src: n => `${n}則評論 · 3個來源`,
+    reviews_src: n => `${n}份指南收錄`,
+    unverified: "確認中",
+    srcs: "資料來源",
+    rev_soon: "⭐ 多平台評分 — 即將推出",
+    act_check: "查看與訂位 — Naver Map",
+    act_check_s: "菜單、照片、評論與訂位資訊最完整",
     bdg_en: "外語菜單", bdg_card: "可刷海外卡", bdg_cash: "海外卡限現金",
     bdg_late: "深夜營業", bdg_wait: "排隊名店", bdg_book: "可訂位", bdg_phone: "僅限電話訂位",
     ai_label: "AI摘要", btn_detail: "詳情・訂位",
@@ -733,8 +981,8 @@ const I18N = {
     r_card: "海外卡", r_late: "深夜營業", r_best: "適合人數", r_one: "一句話",
     yes: "有", ok: "OK", cash: "現金", no: "無", ppl: "位", grp: "6+",
     blended: "綜合評分",
-    ai_t: "🤖 AI摘要 — 韓文評論的真實聲音",
-    ai_src: n => `彙整並翻譯自Naver · Kakao · Catchtable共${n}則韓文評論（樣本資料）`,
+    ai_t: "🤖 AI摘要 — 在地韓文指南的真實聲音",
+    ai_src: "整理自下方公開指南與報導 — 多平台評論彙整即將推出",
     ai_note: "※ 摘要中文版即將推出 — 目前僅提供英文",
     good: "行前須知",
     g_en: "外語菜單", g_card: "海外卡", g_wait: "候位時間", g_best: "適合人數",
@@ -766,9 +1014,10 @@ let compare = [];
 const $ = s => document.querySelector(s);
 const T = () => I18N[LANG];
 const won = n => "₩".repeat(n);
-const waitLabel = w => w === "low" ? T().wait_low : w === "med" ? T().wait_med : T().wait_high;
-const resLabel = r => r === "catchtable" ? "Catchtable Global" : r === "phone" ? T().bdg_phone : T().act_walk;
-const totalReviews = p => p.reviews.naver + p.reviews.kakao + p.reviews.catch;
+const waitLabel = w => w === "low" ? T().wait_low : w === "med" ? T().wait_med : w === "high" ? T().wait_high : T().unverified;
+const resLabel = r => r === "catchtable" ? "Catchtable Global" : r === "phone" ? T().bdg_phone : r === "walkin" ? T().act_walk : T().unverified;
+const totalReviews = p => p.reviews ? p.reviews.naver + p.reviews.kakao + p.reviews.catch : 0;
+const naverUrl = p => "https://map.naver.com/p/search/" + encodeURIComponent(p.kr.includes("성수") ? p.kr : p.kr + " 성수동");
 
 function toast(msg) {
   const t = $("#toast");
@@ -794,7 +1043,7 @@ function matches(p) {
 }
 
 /* ================= map ================= */
-const B = { latMin: 37.5405, latMax: 37.5488, lngMin: 127.0480, lngMax: 127.0615 };
+const B = { latMin: 37.5395, latMax: 37.5480, lngMin: 127.0465, lngMax: 127.0600 };
 const MW = 448, MH = 250;
 const X = lng => (lng - B.lngMin) / (B.lngMax - B.lngMin) * MW;
 const Y = lat => MH - (lat - B.latMin) / (B.latMax - B.latMin) * MH;
@@ -803,8 +1052,9 @@ function drawMap() {
   const svg = $("#map");
   const road = (x1,y1,x2,y2,w) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--map-road)" stroke-width="${w}" stroke-linecap="round"/>`;
   let h = "";
-  h += `<rect x="0" y="40" width="86" height="180" rx="14" fill="var(--map-park)"/>`;
-  h += `<text x="43" y="132" text-anchor="middle" class="maplabel">Seoul Forest</text>`;
+  h += `<rect x="0" y="40" width="60" height="180" rx="14" fill="var(--map-park)"/>`;
+  h += `<text x="30" y="132" text-anchor="middle" class="maplabel">← Seoul</text>`;
+  h += `<text x="30" y="145" text-anchor="middle" class="maplabel">Forest</text>`;
   h += `<rect x="0" y="234" width="${MW}" height="16" fill="var(--map-water)"/>`;
   h += road(0, 210, MW, 198, 13);
   h += road(96, 0, 88, 250, 10);
@@ -814,8 +1064,10 @@ function drawMap() {
   h += road(280, 250, 292, 0, 7);
   h += road(370, 250, 378, 0, 6);
   h += road(96, 120, 448, 112, 6);
-  h += `<g><rect x="118" y="196" width="10" height="10" rx="2" fill="#2d9d54"/><text x="134" y="205" class="stlabel">Ttukseom Stn (2)</text></g>`;
-  h += `<g><rect x="356" y="152" width="10" height="10" rx="2" fill="#2d9d54"/><text x="352" y="148" class="stlabel" text-anchor="end">Seongsu Stn (2)</text></g>`;
+  const tx = X(127.0479), ty = Y(37.5472);
+  const sx = X(127.0560), sy = Y(37.5446);
+  h += `<g><rect x="${(tx-5).toFixed(1)}" y="${(ty-5).toFixed(1)}" width="10" height="10" rx="2" fill="#2d9d54"/><text x="${(tx+10).toFixed(1)}" y="${(ty+4).toFixed(1)}" class="stlabel">Ttukseom Stn (2)</text></g>`;
+  h += `<g><rect x="${(sx-5).toFixed(1)}" y="${(sy-5).toFixed(1)}" width="10" height="10" rx="2" fill="#2d9d54"/><text x="${(sx-10).toFixed(1)}" y="${(sy-8).toFixed(1)}" class="stlabel" text-anchor="end">Seongsu Stn (2)</text></g>`;
   svg.innerHTML = h + `<g id="pins"></g>`;
   drawPins();
 }
@@ -852,11 +1104,11 @@ function drawPins() {
 function badgeRow(p) {
   const t = T();
   const b = [];
-  b.push(`<span class="bdg b-gray">${won(p.price)}</span>`);
-  if (p.engMenu) b.push(`<span class="bdg b-blue">${t.bdg_en}</span>`);
-  if (p.cardOk) b.push(`<span class="bdg b-green">${t.bdg_card}</span>`);
-  else b.push(`<span class="bdg b-amber">${t.bdg_cash}</span>`);
-  if (p.late) b.push(`<span class="bdg b-gray">${t.bdg_late}</span>`);
+  if (p.price) b.push(`<span class="bdg b-gray">${won(p.price)}</span>`);
+  if (p.engMenu === true) b.push(`<span class="bdg b-blue">${t.bdg_en}</span>`);
+  if (p.cardOk === true) b.push(`<span class="bdg b-green">${t.bdg_card}</span>`);
+  if (p.cardOk === false) b.push(`<span class="bdg b-amber">${t.bdg_cash}</span>`);
+  if (p.late === true) b.push(`<span class="bdg b-gray">${t.bdg_late}</span>`);
   if (p.wait === "high") b.push(`<span class="bdg b-amber">${t.bdg_wait}</span>`);
   if (p.reserve === "catchtable") b.push(`<span class="bdg b-brand">${t.bdg_book}</span>`);
   if (p.reserve === "phone") b.push(`<span class="bdg b-amber">${t.bdg_phone}</span>`);
@@ -887,11 +1139,12 @@ function renderCards() {
       <div class="card-top">
         <div>
           <h3>${idx}. ${p.en}<span class="kr">${p.kr}</span></h3>
-          <div class="meta">${p.cat} · <b>${waitLabel(p.wait)}</b> ${t.wait_word}</div>
+          <div class="meta">${p.cat}${p.wait ? ` · <b>${waitLabel(p.wait)}</b> ${t.wait_word}` : ""}</div>
         </div>
         <div class="score">
-          <div class="val">★ ${p.rating.toFixed(1)}</div>
-          <div class="src">${t.reviews_src(totalReviews(p).toLocaleString())}</div>
+          ${p.rating != null
+            ? `<div class="val">★ ${p.rating.toFixed(1)}</div><div class="src">${totalReviews(p).toLocaleString()} reviews</div>`
+            : `<div class="val">📖</div><div class="src">${t.reviews_src(p.sources ? p.sources.length : 1)}</div>`}
         </div>
       </div>
       <div class="badges">${badgeRow(p)}</div>
@@ -935,13 +1188,13 @@ function openCompare() {
     <h2>${t.cmp_title}</h2>
     <table class="cmp-table">
       <tr><th></th>${ps.map(p => `<th><span class="name-cell">${p.en}</span></th>`).join("")}</tr>
-      ${row(t.r_rating, p => `★ ${p.rating.toFixed(1)} <span style="color:var(--ink-3)">(${totalReviews(p).toLocaleString()})</span>`)}
-      ${row(t.r_price, p => won(p.price))}
+      ${row(t.r_rating, p => p.rating != null ? `★ ${p.rating.toFixed(1)} <span style="color:var(--ink-3)">(${totalReviews(p).toLocaleString()})</span>` : `<span class="no">—</span>`)}
+      ${row(t.r_price, p => p.price ? won(p.price) : `<span class="no">—</span>`)}
       ${row(t.r_wait, p => waitLabel(p.wait))}
       ${row(t.r_book, p => resLabel(p.reserve))}
-      ${row(t.r_en, p => p.engMenu ? `<span class="yes">${t.yes}</span>` : `<span class="no">${t.no}</span>`)}
-      ${row(t.r_card, p => p.cardOk ? `<span class="yes">${t.ok}</span>` : `<span class="no">${t.cash}</span>`)}
-      ${row(t.r_late, p => p.late ? `<span class="yes">${t.yes}</span>` : `<span class="no">${t.no}</span>`)}
+      ${row(t.r_en, p => p.engMenu === true ? `<span class="yes">${t.yes}</span>` : p.engMenu === false ? `<span class="no">${t.no}</span>` : `<span class="no">—</span>`)}
+      ${row(t.r_card, p => p.cardOk === true ? `<span class="yes">${t.ok}</span>` : p.cardOk === false ? `<span class="no">${t.cash}</span>` : `<span class="no">—</span>`)}
+      ${row(t.r_late, p => p.late === true ? `<span class="yes">${t.yes}</span>` : p.late === false ? `<span class="no">${t.no}</span>` : `<span class="no">—</span>`)}
       ${row(t.r_best, p => p.party.map(x => x === "group" ? t.grp : x).join(", ") + " " + t.ppl)}
       ${row(t.r_one, p => `<span style="font-size:11.5px">${p.sum.vibe}</span>`)}
     </table>
@@ -961,13 +1214,14 @@ function openDetail(id) {
   render();
   const html = `
     <h2>${p.en} <span class="kr2">${p.kr}</span></h2>
-    <div class="meta" style="margin-top:2px">${p.cat} · ${won(p.price)}</div>
-    <div class="rating-row">
+    <div class="meta" style="margin-top:2px">${p.cat}${p.price ? ` · ${won(p.price)}` : ""}</div>
+    ${p.addr ? `<div class="meta">📍 ${p.addr}</div>` : ""}
+    ${p.rating != null ? `<div class="rating-row">
       <div class="rt"><div class="v">★ ${p.rating.toFixed(1)}</div><div class="l">${t.blended}</div></div>
       <div class="rt"><div class="v">${p.reviews.naver.toLocaleString()}</div><div class="l">Naver</div></div>
       <div class="rt"><div class="v">${p.reviews.kakao.toLocaleString()}</div><div class="l">Kakao</div></div>
       <div class="rt"><div class="v">${p.reviews.catch.toLocaleString()}</div><div class="l">Catchtable</div></div>
-    </div>
+    </div>` : `<div class="ai-note" style="margin:10px 0 12px">${t.rev_soon}</div>`}
     <div class="ai-box">
       <div class="ai-t">${t.ai_t}</div>
       <ul>
@@ -976,13 +1230,15 @@ function openDetail(id) {
         <li class="wait">${p.sum.wait}</li>
         <li class="tip">${p.sum.tip}</li>
       </ul>
-      <div class="ai-src">${t.ai_src(totalReviews(p).toLocaleString())}</div>
+      <div class="ai-src">${t.ai_src}</div>
       ${t.ai_note ? `<div class="ai-note">${t.ai_note}</div>` : ""}
     </div>
+    ${p.sources && p.sources.length ? `<div class="sec-t">${t.srcs}</div>
+    <div class="src-links">${p.sources.map(s => `<a href="${s.u}" target="_blank" rel="noopener">${s.n} ↗</a>`).join("")}</div>` : ""}
     <div class="sec-t">${t.good}</div>
     <div class="info-grid">
-      <div class="ig"><div class="l">${t.g_en}</div><div class="v">${p.engMenu ? t.v_en_y : t.v_en_n}</div></div>
-      <div class="ig"><div class="l">${t.g_card}</div><div class="v">${p.cardOk ? t.v_card_y : t.v_card_n}</div></div>
+      <div class="ig"><div class="l">${t.g_en}</div><div class="v">${p.engMenu === true ? t.v_en_y : p.engMenu === false ? t.v_en_n : t.unverified}</div></div>
+      <div class="ig"><div class="l">${t.g_card}</div><div class="v">${p.cardOk === true ? t.v_card_y : p.cardOk === false ? t.v_card_n : t.unverified}</div></div>
       <div class="ig"><div class="l">${t.g_wait}</div><div class="v">${waitLabel(p.wait)}</div></div>
       <div class="ig"><div class="l">${t.g_best}</div><div class="v">${p.party.map(x => x === "group" ? t.groups : x + " " + t.ppl).join(" · ")}</div></div>
     </div>
@@ -991,8 +1247,9 @@ function openDetail(id) {
         ? `<button class="act act-res" data-act="book"><div>${t.act_book}<span class="sub">${t.act_book_s}</span></div><span class="arr">›</span></button>`
         : p.reserve === "phone"
         ? `<button class="act act-res" data-act="phone"><div>${t.act_phone}<span class="sub">${t.act_phone_s}</span></div><span class="arr">›</span></button>`
-        : `<button class="act act-res" data-act="walkin"><div>${t.act_walk}<span class="sub">${t.act_walk_s}</span></div><span class="arr">›</span></button>`}
-      <button class="act act-dir" data-act="naver"><div>${t.act_naver}<span class="sub">${t.act_naver_s}</span></div><span class="arr">›</span></button>
+        : p.reserve === "walkin"
+        ? `<button class="act act-res" data-act="walkin"><div>${t.act_walk}<span class="sub">${t.act_walk_s}</span></div><span class="arr">›</span></button>`
+        : `<button class="act act-res" data-act="naverlink"><div>${t.act_check}<span class="sub">${t.act_check_s}</span></div><span class="arr">›</span></button>`}
       <button class="act act-g" data-act="google"><div>${t.act_google}<span class="sub">${t.act_google_s}</span></div><span class="arr">›</span></button>
     </div>`;
   openSheet(html);
@@ -1002,8 +1259,8 @@ function openDetail(id) {
       if (a === "book") toast(t.t_book);
       else if (a === "phone") toast(t.t_phone);
       else if (a === "walkin") toast(t.t_walk);
-      else if (a === "naver") toast(t.t_naver);
-      else if (a === "google") window.open(`https://www.google.com/maps/search/?api=1&query=${p.lat},${p.lng}`, "_blank");
+      else if (a === "naverlink") window.open(naverUrl(p), "_blank");
+      else if (a === "google") window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.kr + " " + (p.addr || ""))}`, "_blank");
     });
   });
 }
