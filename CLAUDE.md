@@ -1,4 +1,4 @@
-# TableKorea (가칭) — 레포 단일 진실 출처
+# TableKorea — 레포 단일 진실 출처
 
 방한 외국인 관광객용 맛집 발견·결정 앱. 이 문서가 아키텍처·워크플로의 정답이다.
 프로젝트 문서(claude.ai Projects)와 내용이 다르면 **이 파일이 이긴다**.
@@ -51,6 +51,6 @@ worker/               Cloudflare Worker (피드백 API). D1 바인딩: DB
 
 ## 미결정/보류
 
-- 서비스명 (TableKorea는 가칭) · 도메인 미구매 (`scripts/build_pages.py`의 BASE가 placeholder)
+- 도메인 미구매 (서비스명 TableKorea 확정, 2026-07-30) — 구매 시 `scripts/build_pages.py` BASE·robots.txt·CNAME 갱신
 - Worker 미배포 (wrangler.toml의 database_id placeholder)
 - Catchtable Global 딥링크: 실매장 데이터 확보 후 실제 URL 매핑
