@@ -1,0 +1,397 @@
+[
+  {
+    "id": "p1",
+    "en": "Seongsu Charcoal Galbi",
+    "kr": "성수숯불갈비",
+    "cat": "Korean BBQ",
+    "price": 3,
+    "lat": 37.5449,
+    "lng": 127.0559,
+    "party": [
+      2,
+      4,
+      "group"
+    ],
+    "tags": [
+      "date"
+    ],
+    "engMenu": true,
+    "cardOk": true,
+    "late": true,
+    "wait": "med",
+    "reserve": "catchtable",
+    "rating": 4.6,
+    "reviews": {
+      "naver": 1284,
+      "kakao": 412,
+      "catch": 198
+    },
+    "sum": {
+      "dish": "Nearly every review orders the marinated beef galbi + naengmyeon combo to finish.",
+      "vibe": "Loud, smoky, classic K-BBQ energy — staff grill the meat for you.",
+      "wait": "~30 min at dinner peak (7–8pm). Walk-ins OK before 6pm.",
+      "tip": "Reviewers say solo staff speak basic English and there's a photo menu."
+    }
+  },
+  {
+    "id": "p2",
+    "en": "Brick Lane Coffee",
+    "kr": "브릭레인커피",
+    "cat": "Cafe · Bakery",
+    "price": 2,
+    "lat": 37.5421,
+    "lng": 127.0568,
+    "party": [
+      2,
+      4
+    ],
+    "tags": [
+      "date"
+    ],
+    "engMenu": true,
+    "cardOk": true,
+    "late": false,
+    "wait": "low",
+    "reserve": "walkin",
+    "rating": 4.4,
+    "reviews": {
+      "naver": 2103,
+      "kakao": 876,
+      "catch": 0
+    },
+    "sum": {
+      "dish": "Salt bread and hand-drip single origin are the two things everyone mentions.",
+      "vibe": "Renovated red-brick factory, industrial-cool — the 'Seongsu look'.",
+      "wait": "Seats turn over fast; weekends busy 2–5pm but queue moves quickly.",
+      "tip": "Order at the counter; card only, no cash — foreign cards fine."
+    }
+  },
+  {
+    "id": "p3",
+    "en": "Chorong Kalguksu",
+    "kr": "초롱칼국수",
+    "cat": "Noodles · Local",
+    "price": 1,
+    "lat": 37.5462,
+    "lng": 127.0541,
+    "party": [
+      2,
+      4
+    ],
+    "tags": [
+      "family"
+    ],
+    "engMenu": false,
+    "cardOk": true,
+    "late": false,
+    "wait": "low",
+    "reserve": "walkin",
+    "rating": 4.5,
+    "reviews": {
+      "naver": 934,
+      "kakao": 511,
+      "catch": 0
+    },
+    "sum": {
+      "dish": "Hand-cut knife noodles in anchovy broth; kimchi is self-serve and praised.",
+      "vibe": "No-frills local lunch spot — plastic stools, fast service, mostly regulars.",
+      "wait": "None outside 12–1pm office rush.",
+      "tip": "Korean-only menu, but only 4 items — reviewers say pointing works fine."
+    }
+  },
+  {
+    "id": "p4",
+    "en": "Forest Omakase",
+    "kr": "숲 오마카세",
+    "cat": "Sushi · Omakase",
+    "price": 3,
+    "lat": 37.5445,
+    "lng": 127.0505,
+    "party": [
+      2
+    ],
+    "tags": [
+      "date"
+    ],
+    "engMenu": true,
+    "cardOk": true,
+    "late": false,
+    "wait": "low",
+    "reserve": "phone",
+    "rating": 4.8,
+    "reviews": {
+      "naver": 388,
+      "kakao": 102,
+      "catch": 341
+    },
+    "sum": {
+      "dish": "12-course lunch omakase is the value pick (~₩60,000).",
+      "vibe": "8-seat counter facing Seoul Forest; quiet, intimate, chef chats in English.",
+      "wait": "Reservation-only — no walk-ins accepted.",
+      "tip": "Phone booking only. Ask your hotel concierge to call, or use our call service (coming soon)."
+    }
+  },
+  {
+    "id": "p5",
+    "en": "Golmok Jeon & Makgeolli",
+    "kr": "골목전집",
+    "cat": "Korean pub",
+    "price": 2,
+    "lat": 37.5455,
+    "lng": 127.0585,
+    "party": [
+      4,
+      "group"
+    ],
+    "tags": [],
+    "engMenu": false,
+    "cardOk": false,
+    "late": true,
+    "wait": "high",
+    "reserve": "walkin",
+    "rating": 4.7,
+    "reviews": {
+      "naver": 1671,
+      "kakao": 723,
+      "catch": 0
+    },
+    "sum": {
+      "dish": "Seafood pancake + house makgeolli; locals call it the best jeon in Seongsu.",
+      "vibe": "Retro alley pub, packed after 7pm, very local — almost no tourists.",
+      "wait": "45–60 min Fri/Sat nights. No waitlist app — you queue in person.",
+      "tip": "CASH ONLY for foreign cards (Korean cards OK). ATM is 2 min away."
+    }
+  },
+  {
+    "id": "p6",
+    "en": "Hanwoo & Bean",
+    "kr": "한우앤빈",
+    "cat": "Korean BBQ · Premium",
+    "price": 3,
+    "lat": 37.5416,
+    "lng": 127.0532,
+    "party": [
+      2,
+      4,
+      "group"
+    ],
+    "tags": [
+      "date",
+      "family"
+    ],
+    "engMenu": true,
+    "cardOk": true,
+    "late": true,
+    "wait": "med",
+    "reserve": "catchtable",
+    "rating": 4.5,
+    "reviews": {
+      "naver": 892,
+      "kakao": 301,
+      "catch": 264
+    },
+    "sum": {
+      "dish": "1++ hanwoo tasting set for two; doenjang stew finish is repeatedly praised.",
+      "vibe": "Modern, quieter than most BBQ spots — good for conversation.",
+      "wait": "Bookable, so near-zero if reserved. Walk-in ~20 min.",
+      "tip": "Has private rooms for 6–10 — reviewers recommend for family dinners."
+    }
+  },
+  {
+    "id": "p7",
+    "en": "Seongsu Brunch Works",
+    "kr": "성수브런치웍스",
+    "cat": "Brunch · Western",
+    "price": 2,
+    "lat": 37.5432,
+    "lng": 127.0596,
+    "party": [
+      2,
+      4
+    ],
+    "tags": [
+      "date",
+      "family"
+    ],
+    "engMenu": true,
+    "cardOk": true,
+    "late": false,
+    "wait": "med",
+    "reserve": "catchtable",
+    "rating": 4.3,
+    "reviews": {
+      "naver": 1105,
+      "kakao": 489,
+      "catch": 97
+    },
+    "sum": {
+      "dish": "Ricotta pancakes and the bulgogi benedict (K-fusion) split reviewers evenly.",
+      "vibe": "Bright plant-filled space; stroller-friendly, lots of families on weekends.",
+      "wait": "Weekend 11am–1pm queue ~25 min; weekdays walk right in.",
+      "tip": "Full English menu + English-speaking staff — easiest brunch in the area."
+    }
+  },
+  {
+    "id": "p8",
+    "en": "Yeonmujang Dakhanmari",
+    "kr": "연무장닭한마리",
+    "cat": "Chicken hotpot",
+    "price": 2,
+    "lat": 37.5442,
+    "lng": 127.0577,
+    "party": [
+      4,
+      "group"
+    ],
+    "tags": [
+      "family"
+    ],
+    "engMenu": false,
+    "cardOk": true,
+    "late": true,
+    "wait": "med",
+    "reserve": "walkin",
+    "rating": 4.4,
+    "reviews": {
+      "naver": 756,
+      "kakao": 388,
+      "catch": 0
+    },
+    "sum": {
+      "dish": "Whole chicken hotpot for sharing — add the hand-cut noodles at the end.",
+      "vibe": "Steamy, communal, big round tables — made for groups of 4–8.",
+      "wait": "~20 min at dinner; big tables free up slowly.",
+      "tip": "Menu is Korean-only but there are only 3 options; staff gesture the steps."
+    }
+  },
+  {
+    "id": "p9",
+    "en": "Vegan Seongsu Table",
+    "kr": "비건성수식탁",
+    "cat": "Vegan · Korean",
+    "price": 2,
+    "lat": 37.5468,
+    "lng": 127.0563,
+    "party": [
+      2,
+      4
+    ],
+    "tags": [
+      "date"
+    ],
+    "engMenu": true,
+    "cardOk": true,
+    "late": false,
+    "wait": "low",
+    "reserve": "catchtable",
+    "rating": 4.6,
+    "reviews": {
+      "naver": 412,
+      "kakao": 156,
+      "catch": 88
+    },
+    "sum": {
+      "dish": "Temple-style mushroom bowl; vegan kimchi jjigae surprises meat-eaters.",
+      "vibe": "Calm, minimalist; popular with international long-stay visitors.",
+      "wait": "Rarely more than 10 min.",
+      "tip": "One of very few fully-vegan Korean places east of the river — book ahead Sundays."
+    }
+  },
+  {
+    "id": "p10",
+    "en": "Ttukseom Grilled Fish",
+    "kr": "뚝섬생선구이",
+    "cat": "Grilled fish set",
+    "price": 1,
+    "lat": 37.5476,
+    "lng": 127.0522,
+    "party": [
+      2,
+      4
+    ],
+    "tags": [
+      "family"
+    ],
+    "engMenu": false,
+    "cardOk": true,
+    "late": false,
+    "wait": "low",
+    "reserve": "walkin",
+    "rating": 4.3,
+    "reviews": {
+      "naver": 645,
+      "kakao": 290,
+      "catch": 0
+    },
+    "sum": {
+      "dish": "₩12,000 mackerel set with 8 banchan — reviewers call it the best-value lunch nearby.",
+      "vibe": "Homey, ajumma-run; feels like a Korean grandmother's kitchen.",
+      "wait": "Office rush 12–1pm only.",
+      "tip": "Point at the fish display to order — no shared language needed, and it works."
+    }
+  },
+  {
+    "id": "p11",
+    "en": "Late Night Gopchang Alley",
+    "kr": "심야곱창골목",
+    "cat": "Gopchang · Late night",
+    "price": 2,
+    "lat": 37.5427,
+    "lng": 127.0549,
+    "party": [
+      2,
+      4,
+      "group"
+    ],
+    "tags": [],
+    "engMenu": false,
+    "cardOk": true,
+    "late": true,
+    "wait": "high",
+    "reserve": "walkin",
+    "rating": 4.5,
+    "reviews": {
+      "naver": 1320,
+      "kakao": 604,
+      "catch": 0
+    },
+    "sum": {
+      "dish": "Beef gopchang mixed grill; fried rice finish is described as mandatory.",
+      "vibe": "Open till 2am — where locals go after round one. Loud and fun.",
+      "wait": "Peak 9–11pm, ~40 min. After midnight you walk in.",
+      "tip": "Adventurous eaters only — reviews warn first-timers to start with the mixed set."
+    }
+  },
+  {
+    "id": "p12",
+    "en": "Seoul Forest Pasta Bar",
+    "kr": "서울숲파스타바",
+    "cat": "Italian · Wine",
+    "price": 2,
+    "lat": 37.5459,
+    "lng": 127.0498,
+    "party": [
+      2
+    ],
+    "tags": [
+      "date"
+    ],
+    "engMenu": true,
+    "cardOk": true,
+    "late": true,
+    "wait": "med",
+    "reserve": "catchtable",
+    "rating": 4.4,
+    "reviews": {
+      "naver": 980,
+      "kakao": 344,
+      "catch": 151
+    },
+    "sum": {
+      "dish": "Perilla-oil pasta (K-Italian) is the signature everyone photographs.",
+      "vibe": "Dim, 12-seat wine bar; couples only by design — no groups.",
+      "wait": "Bookable; walk-in chances low after 7pm.",
+      "tip": "Corkage-free Mondays gets mentioned in half the recent reviews."
+    }
+  }
+]
