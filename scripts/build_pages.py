@@ -19,7 +19,7 @@ DATA = ROOT / "data" / "places.json"
 OUT = ROOT / "p"
 
 # TODO: replace with custom domain when purchased (e.g. https://tablekorea.com)
-BASE = "https://REPLACE-ME.github.io/tablekorea"
+BASE = "https://stacks112.github.io/tablekorea"
 
 PAGE = """<!DOCTYPE html>
 <html lang="en">
