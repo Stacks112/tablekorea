@@ -14,10 +14,12 @@
  *  - indexes created alongside tables, not later
  */
 
+import { handleCitydata } from "./citydata.js";
+
 const ALLOWED_ORIGINS = [
   "http://localhost:8000",
-  // "https://<account>.github.io",   ← uncomment + fill on first deploy
-  // "https://tablekorea.example",    ← custom domain when purchased
+  "https://stacks112.github.io",   // 라이브. 주석 처리하면 배포 후 CORS로 막힌다
+  // "https://tablekorea.example",  // 커스텀 도메인 구매 시
 ];
 
 const MAX_NOTE_LEN = 500;
@@ -67,6 +69,11 @@ export default {
 
     if (url.pathname === "/health") {
       return new Response(JSON.stringify({ ok: true }), { headers });
+    }
+
+    // 실시간 도시데이터 프록시. HTTPS↔HTTP 혼합 콘텐츠와 키 노출을 동시에 막는다.
+    if (url.pathname === "/citydata/areas" || url.pathname === "/citydata/area") {
+      return handleCitydata(request, env, headers, ctx);
     }
 
     if (url.pathname === "/feedback" && request.method === "POST") {
