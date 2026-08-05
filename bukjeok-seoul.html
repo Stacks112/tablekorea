@@ -472,9 +472,9 @@ function czPx(a){
 function ensureHatchDefs(){
   const svg=document.querySelector('#map .leaflet-overlay-pane svg');
   if(!svg || svg.querySelector('#cz-hatch1')) return;
-  const pat=i=>`<pattern id="cz-hatch${i}" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-      <rect width="9" height="9" fill="${CZ_HEX[i]}" fill-opacity="0.10"/>
-      <line x1="0" y1="0" x2="0" y2="9" stroke="${CZ_HEX[i]}" stroke-width="3.2" stroke-opacity="0.55"/>
+  const pat=i=>`<pattern id="cz-hatch${i}" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="7" height="7" fill="${CZ_HEX[i]}" fill-opacity="0.055"/>
+      <line x1="0" y1="0" x2="0" y2="7" stroke="${CZ_HEX[i]}" stroke-width="2" stroke-opacity="0.34"/>
     </pattern>`;
   svg.insertAdjacentHTML('afterbegin', `<defs>${pat(1)}${pat(2)}${pat(3)}</defs>`);
 }
@@ -489,7 +489,7 @@ function crowdOverlay(){
      전부 칠하면 아무것도 칠하지 않은 것과 같다 */
   AREAS.filter(a=>a.lv>=1).sort((x,y)=>x.lv-y.lv).forEach(a=>{
     const c=L.circleMarker([a.lat,a.lng],{radius:czPx(a),className:'crowdzone cz'+a.lv,
-      color:CZ_HEX[a.lv],weight:1,opacity:.5,fillOpacity:1,interactive:false}).addTo(crowdLayer);
+      color:CZ_HEX[a.lv],weight:1,opacity:.28,fillOpacity:1,interactive:false}).addTo(crowdLayer);
     c._cz=a;
   });
   ensureHatchDefs();
