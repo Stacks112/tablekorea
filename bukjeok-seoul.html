@@ -174,6 +174,34 @@ border-radius:0 10px 10px 0;font-size:13px;line-height:1.6;user-select:text;-web
 .askblock .ask-cap{font-size:10.5px;font-weight:800;color:var(--lv2);margin-bottom:4px;letter-spacing:.3px}
 .fc-alc{margin-top:7px;font-size:11.5px;font-weight:700;color:var(--lv3)}
 .fc-foot{display:flex;justify-content:flex-end;margin-top:8px}
+#foodctl{padding:9px 12px 4px;border-bottom:1px solid var(--line)}
+#foodctl .chips2{display:flex;gap:6px;overflow-x:auto;padding-bottom:5px;scrollbar-width:none;margin-bottom:2px}
+#foodctl .chips2::-webkit-scrollbar{display:none}
+#foodctl .chips2 button{flex:0 0 auto;display:flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;
+border:1px solid rgba(45,212,191,.3);background:var(--field);color:var(--tx);font-size:11px;font-weight:700;
+cursor:pointer;font-family:inherit;white-space:nowrap}
+#foodctl .chips2 button.on{background:linear-gradient(135deg,rgba(45,212,191,.32),rgba(99,102,241,.26));border-color:rgba(45,212,191,.55)}
+#foodlist{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:8px}
+#foodlist::-webkit-scrollbar{width:4px}
+#foodlist::-webkit-scrollbar-thumb{background:rgba(148,197,255,.25);border-radius:4px}
+.fc2{padding:11px 12px;border-radius:14px;background:var(--panel2);border:1px solid var(--line);margin-bottom:8px;cursor:pointer;transition:.15s}
+.fc2:hover{border-color:rgba(45,212,191,.35)}
+.fc2-tiles{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;margin-bottom:9px;scrollbar-width:none}
+.fc2-tiles::-webkit-scrollbar{display:none}
+.fc2-tile{flex:0 0 auto;width:112px;height:84px;border-radius:12px;background:var(--field);border:1px solid var(--line);
+padding:8px 9px;display:flex;flex-direction:column;justify-content:space-between}
+.fc2-tile.noprice{justify-content:center}
+.fc2-tile .tn{font-size:10.5px;font-weight:600;color:var(--tx);line-height:1.35;display:-webkit-box;
+-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fc2-tile .tp{font-size:13px;font-weight:800;color:var(--tx)}
+.fc2-top2{display:flex;align-items:center;gap:8px}
+.fc2-nm{flex:1;min-width:0;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fc2-d{font-size:11px;color:var(--dim);font-weight:700;flex:0 0 auto}
+.fc2-tierrow{display:flex;align-items:center;gap:7px;margin-top:5px;font-size:11px;color:var(--dim);font-weight:600;flex-wrap:wrap}
+.fc2-tierrow .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto;box-shadow:0 0 8px currentColor;display:inline-block}
+.fc2-crowd{display:flex;align-items:center;gap:6px;margin-top:7px;font-size:11.5px;color:var(--dim);font-weight:600}
+.fc2-crowd i{width:7px;height:7px;border-radius:50%;flex:0 0 auto}
+.fc2-foot{display:flex;justify-content:flex-end;margin-top:8px}
 .mk{position:relative}
 .mk .core{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;
 box-shadow:0 0 12px currentColor,inset 0 0 4px rgba(255,255,255,.55)}
@@ -201,6 +229,11 @@ color:var(--dim);font-size:13px;text-align:center;padding:40px}
  #city-switch{margin-left:6px}#city-switch .cs{padding:2.5px 7px;font-size:10.5px}
  .chips{flex-basis:100%}
  aside{inset:auto 10px 10px;width:auto;height:42vh}
+ aside.foodmode{height:62vh}
+.fc2-nomenu{padding:9px 11px;background:var(--field);border:1px solid var(--line);border-radius:12px;
+font-size:12px;color:var(--tx);line-height:1.5;margin-bottom:9px}
+.fc2-nomenu b{color:var(--dim);font-size:10.5px;font-weight:800;margin-right:5px}
+.fc2-nop{display:block;margin-top:3px;font-size:10px;color:var(--dim);font-weight:600}
  aside.hidden{transform:translateY(calc(100% + 20px))}
  #drawer{inset:auto 10px 10px;width:auto;height:72vh;max-height:72vh;transform:translateY(calc(100% + 20px))}
  #drawer.open{transform:none}
@@ -215,7 +248,7 @@ color:var(--dim);font-size:13px;text-align:center;padding:40px}
       <button class="cs on" data-city="seoul">서울</button>
       <button class="cs" data-city="jeju">제주</button>
       <button class="cs" data-city="busan">부산</button>
-    </span></h1><small>서울 120곳 실시간 인파</small></div>
+    </span></h1><small id="hdr-sub">서울 120곳 실시간 인파</small></div>
   </div>
   <div class="chips">
     <button class="chip" id="refresh-chip">⟳ <span id="stamp">–</span></button>
@@ -231,6 +264,10 @@ color:var(--dim);font-size:13px;text-align:center;padding:40px}
       <button type="submit">검색</button>
       <button type="button" id="panel-hide">✕</button>
     </form>
+    <div class="seg" id="modeseg">
+      <button data-m="food" class="on">🍽 맛집 <span id="modeseg-food-n">193</span></button>
+      <button data-m="area">📍 지역 <span id="modeseg-area-n">120</span></button>
+    </div>
     <div id="search-note">주소를 검색하면 가까운 명소 인파를 거리순으로 보여드려요.</div>
     <div class="seg" id="seg">
       <button data-s="busy" class="on">붐빔순</button>
@@ -239,11 +276,26 @@ color:var(--dim);font-size:13px;text-align:center;padding:40px}
     </div>
     <button type="button" id="food-filter-chip" class="foodtogglechip">🍽 먹을 곳 있는 지역</button>
   </div>
+  <div id="foodctl">
+    <div class="chips2" id="foodcats">
+      <button data-fc="all" class="on">전체</button>
+      <button data-fc="cafe">☕ 카페</button>
+      <button data-fc="soup">🍜 국물집</button>
+      <button data-fc="t1">✅ 물어볼 것 없음</button>
+      <button data-fc="noalc">🚫 술 없는 곳</button>
+    </div>
+    <div class="seg" id="foodsort">
+      <button data-fs="near" class="on">거리순</button>
+      <button data-fs="calm">지금 한산한 순</button>
+      <button data-fs="price">가격 낮은 순</button>
+    </div>
+  </div>
   <div id="calmstrip">
     <div class="cap">🍃 지금 한산한 명소 TOP</div>
     <div class="chips2" id="chips2"></div>
   </div>
   <div id="arealist"></div>
+  <div id="foodlist"></div>
 </aside>
 
 <button id="panel-show"><span class="ic">🗺️</span>명소 목록</button>
@@ -299,6 +351,8 @@ const ROAD=['원활','서행','정체'];
 let AREAS = DATA.areas.slice();
 let sortMode='busy', origin=null, cur=null;
 let foodOnly=false;
+let listMode='food', foodCatFilter='all', foodSortMode='near', foodShowN=20;
+const CENTER_SEONGSU=[37.54354,127.05582];
 const $=s=>document.querySelector(s);
 const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('show');
   clearTimeout(window._tt);window._tt=setTimeout(()=>t.classList.remove('show'),2200);};
@@ -411,6 +465,142 @@ function renderFoodSection(a){
   buildFoodSectionInner(a);
 }
 
+/* ---- 맛집 모드 (하단 시트 1단계) ---- */
+function minPrice(r){
+  let m=Infinity;
+  (r.menu||[]).forEach(mi=>{
+    const p=priceParts(mi);
+    if(p.price){ const n=parseInt(p.price.replace(/[^\d]/g,''),10); if(!isNaN(n)&&n<m) m=n; }
+  });
+  return m;
+}
+function foodFiltered(){
+  let l=FOOD.rows;
+  if(foodCatFilter==='cafe') l=l.filter(r=>r.kind==='cafe');
+  else if(foodCatFilter==='soup') l=l.filter(r=>r.kind==='soup');
+  else if(foodCatFilter==='t1') l=l.filter(r=>r.tier===1);
+  else if(foodCatFilter==='noalc') l=l.filter(r=>!r.alc);
+  return l.slice();
+}
+function foodSorted(){
+  const o=origin||CENTER_SEONGSU;
+  const pm={}; AREAS.forEach(a=>pm[a.cd]=a);
+  const l=foodFiltered();
+  l.forEach(r=>{ r._d=dist(o[0],o[1],r.lat,r.lng); });
+  if(foodSortMode==='calm'){
+    l.sort((x,y)=>{
+      const lx=pm[x.poi]?pm[x.poi].lv:9, ly=pm[y.poi]?pm[y.poi].lv:9;
+      return lx-ly || x._d-y._d;
+    });
+  }else if(foodSortMode==='price'){
+    l.sort((x,y)=>minPrice(x)-minPrice(y));
+  }else{
+    l.sort((x,y)=>x._d-y._d);
+  }
+  return l;
+}
+function foodTileHtml(mi){
+  const p=priceParts(mi);
+  if(p.price) return `<div class="fc2-tile"><span class="tn">${p.name}</span><span class="tp">${p.price}</span></div>`;
+  return `<div class="fc2-tile noprice"><span class="tn">${p.name}</span></div>`;
+}
+function foodCard2Html(r){
+  const items=r.menu||[];
+  // 타일은 가격 있는 것만, 싼 순으로. 가격이 하나도 없으면 이름만 한 줄로 접는다.
+  const parsed=items.map(priceParts);
+  // 술 메뉴는 뒤로 — 술을 피하려는 사용자에게 대표 메뉴로 보이면 안 된다
+  const ALC=/막걸리|맥주|소주|와인|하이볼|사케|칵테일|위스키|생맥|벨리니|모히또|wine|beer|whisky|cocktail/i;
+  const priced=parsed.filter(p=>p.price)
+    .map(p=>({p,v:parseInt(String(p.price).replace(/[^0-9]/g,''),10)||0,a:ALC.test(p.name)?1:0}))
+    .sort((a,b)=>a.a-b.a||a.v-b.v).slice(0,6).map(x=>x.p);
+  let tilesHtml='';
+  if(priced.length){
+    tilesHtml=`<div class="fc2-tiles">${priced.map(p=>
+      `<div class="fc2-tile"><span class="tn">${p.name}</span><span class="tp">${p.price}</span></div>`).join('')}</div>`;
+  }else if(parsed.length){
+    const names=parsed.slice(0,3).map(p=>p.name).join(' · ');
+    const rest=parsed.length>3? ` 외 ${parsed.length-3}개`:'';
+    tilesHtml=`<div class="fc2-nomenu"><b>메뉴</b> ${names}${rest}<span class="fc2-nop">가격 미확인</span></div>`;
+  }
+  const tierColor = r.tier===1?'var(--lv1)':r.tier===2?'var(--lv2)':'var(--dim)';
+  const tierLabel = r.tier===1?'물어볼 것 없음':r.tier===2?'물어볼 것 있음':'육류 있음';
+  const kindLabel = r.kind==='cafe'?'카페':'국물집';
+  const d = r._d!=null? r._d : dist((origin||CENTER_SEONGSU)[0],(origin||CENTER_SEONGSU)[1],r.lat,r.lng);
+  const dtxt = d<1000? Math.round(d)+'m' : (d/1000).toFixed(1)+'km';
+  const commHtml = r.community? `<span class="fc-comm">무슬림 커뮤니티 언급</span>` : '';
+  const poi=AREAS.find(a=>a.cd===r.poi);
+  const crowdHtml = poi? `<div class="fc2-crowd"><i style="background:${LVC[poi.lv]}"></i>${poi.nm} · 지금 ${LV[poi.lv]} ${(poi.mx||0).toLocaleString()}명</div>` : '';
+  const askHtml=(r.ask&&r.ask.length)?
+    `<div class="askblock"><div class="ask-cap">💬 물어보세요</div>${r.ask.map(k=>`<div>${FOOD.askKeys[k]||k}</div>`).join('')}</div>` : '';
+  const alcHtml = r.alc? `<div class="fc-alc">술을 파는 가게예요</div>` : '';
+  const nm=encodeURIComponent(r.nm);
+  return `<div class="fc2" data-lat="${r.lat}" data-lng="${r.lng}">
+    ${tilesHtml}
+    <div class="fc2-top2"><div class="fc2-nm">${r.nm}</div><span class="fc2-d">${dtxt}</span></div>
+    <div class="fc2-tierrow"><span class="dot" style="background:${tierColor};color:${tierColor}"></span>${tierLabel} · ${kindLabel}${commHtml}</div>
+    ${crowdHtml}
+    ${askHtml}${alcHtml}
+    <div class="fc2-foot"><a class="fc-map" href="https://map.naver.com/p/search/${nm}" target="_blank" rel="noopener">지도 ↗</a></div>
+  </div>`;
+}
+function foodMarkers(list){
+  if(!HAS_MAP) return;
+  mkLayer.clearLayers();
+  list.forEach(r=>{
+    const color = r.tier===1?'var(--lv1)':r.tier===2?'var(--lv2)':'var(--dim)';
+    const ic=L.divIcon({className:'',iconSize:[12,12],html:
+      `<div class="mk" style="color:${color};width:12px;height:12px">
+        <div class="core" style="width:12px;height:12px;background:${color}"></div></div>`});
+    const m=L.marker([r.lat,r.lng],{icon:ic}).addTo(mkLayer);
+    m.on('click',()=>{ map.setView([r.lat,r.lng],17,{animate:true}); });
+  });
+}
+function renderFoodList(){
+  const l=foodSorted();
+  const fl=$('#foodlist');
+  if(!l.length){
+    fl.innerHTML=`<div class="note" style="padding:26px 12px;text-align:center">조건에 맞는 곳이 없어요</div>`;
+    if(HAS_MAP) mkLayer.clearLayers();
+    return;
+  }
+  const shown=l.slice(0,foodShowN);
+  let html=shown.map(foodCard2Html).join('');
+  if(l.length>foodShowN){
+    html+=`<div class="nearby" style="padding:2px 2px 6px"><button id="food-more2">+ 더보기 (${l.length-foodShowN}곳 남음)</button></div>`;
+  }
+  fl.innerHTML=html;
+  fl.querySelectorAll('.fc2').forEach(el=>{
+    el.addEventListener('click',(e)=>{
+      if(e.target.closest('.fc-map')) return;
+      if(!HAS_MAP) return;
+      map.setView([parseFloat(el.dataset.lat),parseFloat(el.dataset.lng)],17,{animate:true});
+    });
+  });
+  const mb=$('#food-more2');
+  if(mb) mb.onclick=()=>{ foodShowN+=20; renderFoodList(); };
+  foodMarkers(l);
+}
+function setListMode(m){
+  listMode=m;
+  const isFood = m==='food';
+  $('#modeseg').querySelectorAll('button').forEach(b=>b.classList.toggle('on', b.dataset.m===m));
+  $('#foodctl').style.display = isFood? '' : 'none';
+  $('#foodlist').style.display = isFood? '' : 'none';
+  $('#arealist').style.display = isFood? 'none' : '';
+  $('#calmstrip').style.display = isFood? 'none' : '';
+  $('#food-filter-chip').style.display = isFood? 'none' : '';
+  $('#seg').style.display = isFood? 'none' : '';
+  $('#hdr-sub').textContent = isFood? '성수 193곳 · 메뉴와 가격으로 고르기' : '서울 120곳 실시간 인파';
+  $('#aside').classList.toggle('foodmode', isFood);
+  if(isFood){
+    if(HAS_MAP) map.setView([37.5445,127.0525],15,{animate:true});
+    renderFoodList();
+  }else{
+    if(HAS_MAP) map.setView([37.5535,126.9895],11.4,{animate:true});
+    render();
+  }
+}
+
 /* ---- 목록 ---- */
 function sortList(){
   let l=AREAS.slice();
@@ -516,7 +706,11 @@ function setOrigin(ll,label){
   if(HAS_MAP){ if(homeMk) map.removeLayer(homeMk);
     homeMk=L.marker(ll,{icon:L.divIcon({className:'',html:'<div class="home-mk">📍</div>',iconSize:[22,22]})}).addTo(map);
     map.setView(ll,13);}
-  render();
+  if(listMode==='food'){
+    foodSortMode='near'; foodShowN=20;
+    $('#foodsort').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.fs==='near'));
+    renderFoodList();
+  }else render();
 }
 $('#seg').querySelectorAll('button').forEach(b=>b.onclick=()=>{
   if(b.disabled) return; sortMode=b.dataset.s;
@@ -526,6 +720,19 @@ $('#food-filter-chip').onclick=()=>{
   $('#food-filter-chip').classList.toggle('on',foodOnly);
   render();
 };
+$('#modeseg').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  if(b.dataset.m!==listMode) setListMode(b.dataset.m);
+});
+$('#foodcats').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  foodCatFilter=b.dataset.fc; foodShowN=20;
+  $('#foodcats').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+  renderFoodList();
+});
+$('#foodsort').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  foodSortMode=b.dataset.fs; foodShowN=20;
+  $('#foodsort').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+  renderFoodList();
+});
 $('#d-close').onclick=()=>$('#drawer').classList.remove('open');
 $('#panel-hide').onclick=()=>{$('#aside').classList.add('hidden');$('#panel-show').classList.add('on');};
 $('#panel-show').onclick=()=>{$('#aside').classList.remove('hidden');$('#panel-show').classList.remove('on');};
@@ -538,6 +745,7 @@ $('#theme-chip').onclick=()=>{
       {maxZoom:19,attribution:'© OpenStreetMap © CARTO · 인파: 서울 열린데이터광장'}).addTo(map);
     window._tiles.bringToBack(); }
   render(); if(cur) open_(cur);
+  if(listMode==='food') renderFoodList();
 };
 $('#refresh-chip').onclick=()=>live(true);
 
@@ -548,7 +756,7 @@ async function live(manual){
     const r=await fetch(WORKER_BASE+'/citydata/all');
     const j=await r.json();
     if(j.areas?.length){ /* 동일 스키마로 교체 */ AREAS=j.areas; DATA.fetchedAt=j.fetchedAt;
-      stamp(); render(); toast('최신 인파로 갱신했어요'); }
+      stamp(); render(); if(listMode==='food') renderFoodList(); toast('최신 인파로 갱신했어요'); }
   }catch(e){ if(manual) toast('갱신에 실패했습니다'); }
 }
 function stamp(){
@@ -558,7 +766,11 @@ function stamp(){
 document.querySelectorAll('#city-switch .cs').forEach(b=>b.onclick=()=>{
   if(b.dataset.city!=='seoul'){ toast(b.textContent+'은 아직 준비 중이에요'); return; }});
 
-stamp(); render();
+stamp();
+$('#modeseg-food-n').textContent=FOOD.rows.length;
+$('#modeseg-area-n').textContent=AREAS.length;
+render();
+setListMode('food');
 if(window.innerWidth<=860) $('#drawer').classList.remove('open');
 live(false);
 </script></body></html>
